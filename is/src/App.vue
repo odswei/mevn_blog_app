@@ -2,19 +2,23 @@
   <v-app id="main">
     <v-container fluid id="mar">
       <v-app-bar class="bar" elevate="0" flat color="deep-orange accent-4">
-        <v-toolbar-title class="text-h5">Infinite Series</v-toolbar-title>
-
+        <v-icon size="200">$vuetify.icons.custom</v-icon>
         <v-spacer></v-spacer>
 
-        <router-link style="text-decoration: none" to="/write">
+        <router-link v-if="loggedIn" style="text-decoration: none" to="/write">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
           </v-btn></router-link
         >
 
-        <router-link v-if="!loggedIn" to="/login" class="light"
-          >Login</router-link
+        <router-link
+          v-if="!loggedIn"
+          style="text-decoration: none"
+          to="/login"
+          class="light"
+        >
+          <v-btn plain class="write-button">Login</v-btn></router-link
         >
 
         <nav-profile v-else />

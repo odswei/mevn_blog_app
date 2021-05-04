@@ -18,6 +18,9 @@ const routes = [
     path: "/write",
     name: "Write",
     component: Write,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/dashboard",

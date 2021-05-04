@@ -42,7 +42,7 @@
             small
             class="button"
           >
-            <v-icon small>mdi-delete</v-icon>
+            <v-icon size="50">$vuetify.icons.delete_btn</v-icon>
           </v-btn>
         </v-fab-transition>
         <v-fab-transition>
