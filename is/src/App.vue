@@ -24,11 +24,7 @@
         <nav-profile v-else />
       </v-app-bar>
     </v-container>
-    <div class="jumbotron" v-if="!loggedIn">
-      <div class="box">
-        <div class="j-title">Show and Share with the world!</div>
-      </div>
-    </div>
+   <jumbotron/>
     <v-main>
       <v-container class="front"> <router-view /> </v-container
     ></v-main>
@@ -38,13 +34,15 @@
 <script>
 // import Navbar from "./components/Navbar.vue";
 import NavProfile from "@/components/NavProfile.vue";
+import Jumbotron from './components/Jumbotron.vue';
 // import AllPosts from "@/components/Post.vue";
 export default {
   name: "App",
-
   components: {
     // AllPosts,
     NavProfile,
+
+    Jumbotron
   },
 
   computed: {
@@ -74,29 +72,7 @@ export default {
   color: rgb(255, 255, 255);
 }
 
-.jumbotron {
-  height: 600px;
-  background-color: #dd2c00;
-}
 
-.box {
-  position: relative;
-
-  max-width: 1500px;
-  height: 600px;
-  margin: auto;
-}
-
-.j-title {
-  color: white;
-  font-size: 7em;
-
-  position: absolute;
-  right: 40px;
-  bottom: 0;
-  width: 900px;
-  text-align: end;
-}
 
 .write-button li a {
   text-decoration: none;

@@ -11,6 +11,10 @@ require('./config/database')
 
 require('./models/user')
 require('./models/post')
+require('./models/series')
+require('./models/chapter')
+require('./models/content')
+require('./models/comment')
 
 require('./config/passport')(passport)
 
