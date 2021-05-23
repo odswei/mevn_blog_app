@@ -26,8 +26,8 @@ export default {
     if (token) {
       axios.defaults.headers.common["Authorization"] = token;
       axios
-        .get("//localhost:3001/p/post")
-        .then(({ data }) => (this.posts = data.posts));
+        .get("//localhost:3001/series")
+        .then(({ data }) => (this.posts = data));
     }
   },
 };

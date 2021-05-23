@@ -1,17 +1,15 @@
 <template>
   <v-app id="main">
-    <v-container fluid id="mar">
-      <v-app-bar class="bar" elevate="0" flat color="deep-orange accent-4">
+    <v-container fluid class="bar-container">
+      <v-app-bar class="nav-bar" elevate="0" flat color="deep-orange accent-4">
         <v-icon size="200">$vuetify.icons.custom</v-icon>
         <v-spacer></v-spacer>
-
         <router-link v-if="loggedIn" style="text-decoration: none" to="/write">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
           </v-btn></router-link
         >
-
         <router-link
           v-if="!loggedIn"
           style="text-decoration: none"
@@ -20,13 +18,12 @@
         >
           <v-btn plain class="write-button">Login</v-btn></router-link
         >
-
         <nav-profile v-else />
       </v-app-bar>
     </v-container>
-   <jumbotron/>
+    <main-card class="bar" />
     <v-main>
-      <v-container class="front"> <router-view /> </v-container
+      <div class="front"><router-view /></div
     ></v-main>
   </v-app>
 </template>
@@ -34,7 +31,7 @@
 <script>
 // import Navbar from "./components/Navbar.vue";
 import NavProfile from "@/components/NavProfile.vue";
-import Jumbotron from './components/Jumbotron.vue';
+import MainCard from "./components/MainCard.vue";
 // import AllPosts from "@/components/Post.vue";
 export default {
   name: "App",
@@ -42,7 +39,7 @@ export default {
     // AllPosts,
     NavProfile,
 
-    Jumbotron
+    MainCard,
   },
 
   computed: {
@@ -54,25 +51,25 @@ export default {
 </script>
 
 <style scoped>
-#mar {
-  margin: auto;
-  background-color: #dd2c00;
-  position: fixed;
+.bar-container {
+  position: sticky;
+  position: -webkit-sticky;
   z-index: 1;
+  top: 0; /* required */
+  background-color: #dd2c00;
 }
 
 .front {
   width: 1100px;
   margin-top: 140px;
+  margin: auto;
 }
 
-.bar {
-  max-width: 1500px;
+.nav-bar {
+  max-width: 1300px;
   margin: auto;
   color: rgb(255, 255, 255);
 }
-
-
 
 .write-button li a {
   text-decoration: none;

@@ -6,18 +6,20 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: {
+      hw: null,
+    },
   },
   mutations: {
     SET_USER_DATA(state, userData) {
       state.user = userData;
-      localStorage.setItem("user", JSON.stringify(userData));
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${userData.token}`;
+      localStorage.setItem("xhtrvbq", userData.hw);
+    },
+    SET_HW(state, hw) {
+      state.user.hw = hw;
     },
     CLEAR_USER_DATA() {
-      localStorage.removeItem("user");
+      localStorage.removeItem("xhtrvbq");
       location.reload();
     },
   },

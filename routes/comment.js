@@ -30,3 +30,5 @@ const newComment = new Comment({
     });
   
 });
+
+module.exports = router;

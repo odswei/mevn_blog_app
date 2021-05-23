@@ -11,10 +11,10 @@ new Vue({
   router,
   store,
   created() {
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const userData = JSON.parse(userString);
-      this.$store.commit("SET_USER_DATA", userData);
+    const chimney = localStorage.getItem("xhtrvbq");
+
+    if (chimney) {
+      this.$store.commit("SET_HW", chimney);
     }
     axios.interceptors.response.use(
       (response) => response,

@@ -1,19 +1,19 @@
 <template>
-     <div class="jumbotron" v-if="!loggedIn">
-      <div class="box">
-        <div class="j-title">Show and Share with the world!</div>
-      </div>
+  <div class="jumbotron" v-if="!loggedIn">
+    <div class="box">
+      <div class="j-title">Show and Share with the world!</div>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
-    computed: {
+  computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
   },
-}
+};
 </script>
 
 <style scoped>

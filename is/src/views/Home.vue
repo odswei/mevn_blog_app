@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <!-- <v-row>
       <v-col v-for="{ post } in posts" :key="post._id" cols="12" md="6" sm="12">
         <v-card elevation="0">
           <div v-for="(content, index) in post" :key="index">
@@ -13,29 +13,35 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
+    <profile-photo />
+    {{ posts }}
   </v-container>
 </template>
 
 <script>
 // @ is an alias to /src
-// import Posts from "../components/Posts.vue";
+import ProfilePhoto from "../components/ProfilePhoto.vue";
 import axios from "axios";
 export default {
+  components: {
+    ProfilePhoto,
+  },
   data() {
     return {
-      posts: "",
+      posts: "hello world",
       loading: false,
       selection: 1,
     };
   },
+
   mounted() {
-    const token = this.$store.state.user.token;
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = token;
+    const hw = this.$store.state.user.hw;
+    if (hw) {
+      axios.defaults.headers.common["Authorization"] = hw;
       axios
-        .get("//localhost:3001/p/post")
-        .then(({ data }) => (this.posts = data.posts));
+        .get("//localhost:3001/series")
+        .then(({ data }) => (this.posts = data));
     }
   },
 };

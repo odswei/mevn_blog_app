@@ -13,8 +13,8 @@ require('./models/user')
 require('./models/post')
 require('./models/series')
 require('./models/chapter')
-require('./models/content')
 require('./models/comment')
+require('./models/image')
 
 require('./config/passport')(passport)
 

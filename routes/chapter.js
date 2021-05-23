@@ -6,15 +6,17 @@ const util = require('../helpers/util')
 
 router.post('/chapter', passport.authenticate('jwt', { session: false }), function(req, res, next){
     const series_id = req.body.series_id
-    const chapter = req.body.chapter
+    const chapter_no = req.body.chapter_no
     const c_title = req.body.c_title
     const tags = req.body.tags
+    const content = req.body.content
 
 
 const newChapter = new Chapter({
     series_id:series_id, 
-    chapter:chapter,
+    chapter_no:chapter_no,
     c_title:c_title,
+    content:content,
     tags:tags,
 })
 
@@ -33,3 +35,5 @@ const newChapter = new Chapter({
     });
   
 });
+
+module.exports = router;
