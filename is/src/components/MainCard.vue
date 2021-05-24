@@ -1,12 +1,18 @@
 <template>
   <v-container class="maincard">
     <v-row no-gutters>
-      <v-col cols="7" v-for="(chapter, index) in chapters" :key="index">
-        <span class="dot">{{ chapter.chapter }}</span>
-        <span class="c-title">{{ chapter.c_title }}</span>
-        <div class="vl"></div>
+      <v-col cols="6">Hello</v-col>
+      <v-col cols="6">
+        <div v-for="(chapter, index) in chapters" :key="index">
+          <div class="step-container">
+            <span class="dot">
+              <span class="c-no c-vertical">{{ chapter.chapter }}</span>
+            </span>
+            <span class="c-title c-vertical">{{ chapter.c_title }}</span>
+          </div>
+          <div class="vl"></div>
+        </div>
       </v-col>
-      <v-col cols="5">Hello</v-col>
     </v-row>
   </v-container>
 </template>
@@ -82,7 +88,6 @@ export default {
       ],
     };
   },
-  mounted: {},
 };
 </script>
 
@@ -90,6 +95,10 @@ export default {
 /* .maincard {
   background-color: aqua;
 } */
+.c-no {
+  width: 25px;
+  margin: 0 0 0 -12.5px;
+}
 .dot {
   height: 25px;
   width: 25px;
@@ -100,11 +109,22 @@ export default {
 }
 .vl {
   border-left: 1px solid rgb(82, 82, 82);
+  top: 50%;
   height: 25px;
-  margin-left: 12.5px !important;
-  margin-bottom: 5px !important;
+  margin: 5px 0px 5px 12.5px !important;
+}
+.c-vertical {
+  position: absolute;
+  top: 50%;
+  height: 25px;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 .c-title {
-  margin-left: 10px;
+  margin: 0 0 0 15px;
+}
+.step-container {
+  height: 25px;
+  position: relative;
 }
 </style>

@@ -43,7 +43,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     loggedIn(state) {
-      return !!state.user;
+      return !!state.user.hw;
     },
   },
 });

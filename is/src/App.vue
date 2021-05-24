@@ -38,13 +38,12 @@ export default {
   components: {
     // AllPosts,
     NavProfile,
-
     MainCard,
   },
 
   computed: {
     loggedIn() {
-      return this.$store.getters.loggedIn;
+      return console.log(this.$store.getters.loggedIn);
     },
   },
 };

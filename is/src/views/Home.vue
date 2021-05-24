@@ -36,7 +36,7 @@ export default {
   },
 
   mounted() {
-    const hw = this.$store.state.user.hw;
+    const hw = this.$store.state.user;
     if (hw) {
       axios.defaults.headers.common["Authorization"] = hw;
       axios
