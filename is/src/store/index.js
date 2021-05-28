@@ -6,9 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: {
-      hw: null,
-    },
+    user: null,
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -16,7 +14,7 @@ export default new Vuex.Store({
       localStorage.setItem("xhtrvbq", userData.hw);
     },
     SET_HW(state, hw) {
-      state.user.hw = hw;
+      state.user = { hw: hw };
     },
     CLEAR_USER_DATA() {
       localStorage.removeItem("xhtrvbq");
@@ -43,7 +41,7 @@ export default new Vuex.Store({
   modules: {},
   getters: {
     loggedIn(state) {
-      return !!state.user.hw;
+      return !!state.user;
     },
   },
 });

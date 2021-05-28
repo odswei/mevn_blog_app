@@ -3,7 +3,7 @@ const router = require('express').Router()
 const Series = mongoose.model('Series')
 const passport = require('passport')
 
-router.post('/series',passport.authenticate('jwt', { session: false }), function(req, res, next){
+router.post('/series', function(req, res, next){
     const user_id = req.user.id
     const s_title = req.body.s_title
 

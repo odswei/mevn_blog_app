@@ -119,10 +119,10 @@ router.get('/me',decrypt,passport.authenticate('jwt',{session:false}),(req,res,n
     res.json(req.user)
 })
 
-router.get('/series',decrypt,passport.authenticate('jwt',{session:false}),function(req,res,next){
+router.get('/series',function(req,res,next){
     
     Series.find().then(response=>{
-        res.send(response)
+        res.json(response)
     })
 })
 

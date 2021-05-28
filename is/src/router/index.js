@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
-import Write from "../views/Write.vue";
+import Editor from "../views/Editor.vue";
 
 Vue.use(VueRouter);
 
@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: "/write",
-    name: "Write",
-    component: Write,
+    name: "Editor",
+    component: Editor,
     meta: {
       requiresAuth: true,
     },
@@ -58,7 +58,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const loggedIn = localStorage.getItem("user");
+  const loggedIn = localStorage.getItem("xhtrvbq");
   if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
     next({ name: "Home" });
   }

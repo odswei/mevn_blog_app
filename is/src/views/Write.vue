@@ -79,12 +79,14 @@
     >
       Save
     </v-btn>
+    -->
   </div>
 </template>
 <script>
 import axios from "axios";
 
 export default {
+  components: {},
   data() {
     return {
       id: 100,

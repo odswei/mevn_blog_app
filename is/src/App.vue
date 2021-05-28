@@ -21,7 +21,7 @@
         <nav-profile v-else />
       </v-app-bar>
     </v-container>
-    <main-card class="bar" />
+
     <v-main>
       <div class="front"><router-view /></div
     ></v-main>
@@ -31,19 +31,18 @@
 <script>
 // import Navbar from "./components/Navbar.vue";
 import NavProfile from "@/components/NavProfile.vue";
-import MainCard from "./components/MainCard.vue";
+
 // import AllPosts from "@/components/Post.vue";
 export default {
   name: "App",
   components: {
     // AllPosts,
     NavProfile,
-    MainCard,
   },
 
   computed: {
     loggedIn() {
-      return console.log(this.$store.getters.loggedIn);
+      return this.$store.getters.loggedIn;
     },
   },
 };

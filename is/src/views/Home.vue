@@ -14,18 +14,21 @@
         </v-card>
       </v-col>
     </v-row> -->
-    <profile-photo />
-    {{ posts }}
+    <main-card class="bar" />
+    <profile-photo />hi
+    <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div>
   </v-container>
 </template>
 
 <script>
+import MainCard from "../components/MainCard.vue";
 // @ is an alias to /src
 import ProfilePhoto from "../components/ProfilePhoto.vue";
 import axios from "axios";
 export default {
   components: {
     ProfilePhoto,
+    MainCard,
   },
   data() {
     return {
