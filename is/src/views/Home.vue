@@ -15,7 +15,7 @@
       </v-col>
     </v-row> -->
     <main-card class="bar" />
-    <profile-photo />hi
+    <profile-photo />
     <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div>
   </v-container>
 </template>
@@ -39,13 +39,9 @@ export default {
   },
 
   mounted() {
-    const hw = this.$store.state.user;
-    if (hw) {
-      axios.defaults.headers.common["Authorization"] = hw;
-      axios
-        .get("//localhost:3001/series")
-        .then(({ data }) => (this.posts = data));
-    }
+    axios
+      .get("//localhost:3001/series")
+      .then(({ data }) => (this.posts = data));
   },
 };
 </script>

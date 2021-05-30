@@ -18,6 +18,11 @@ import H6Icon from "@/components/H6Icon.vue";
 import BulletIcon from "@/components/BulletIcon.vue";
 import NumberIcon from "@/components/NumberIcon.vue";
 import CodeBlockIcon from "@/components/CodeBlockIcon.vue";
+import BlockQuoteIcon from "@/components/BlockQuoteIcon.vue";
+import HRuleIcon from "@/components/HRuleIcon.vue";
+import HardBreakIcon from "@/components/HardBreakIcon.vue";
+import UndoIcon from "@/components/UndoIcon.vue";
+import RedoIcon from "@/components/RedoIcon.vue";
 
 Vue.use(Vuetify);
 
@@ -95,6 +100,26 @@ export default new Vuetify({
       codeblock_btn: {
         // name of our custom icon
         component: CodeBlockIcon, // our custom component
+      },
+      blockquote_btn: {
+        // name of our custom icon
+        component: BlockQuoteIcon, // our custom component
+      },
+      hrule_btn: {
+        // name of our custom icon
+        component: HRuleIcon, // our custom component
+      },
+      hardbreak_btn: {
+        // name of our custom icon
+        component: HardBreakIcon, // our custom component
+      },
+      undo_btn: {
+        // name of our custom icon
+        component: UndoIcon, // our custom component
+      },
+      redo_btn: {
+        // name of our custom icon
+        component: RedoIcon, // our custom component
       },
     },
   },

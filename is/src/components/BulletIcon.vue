@@ -38,6 +38,6 @@
       stroke="#3A3636"
       stroke-width="1.5"
     />
-    <circle cx="3.75" cy="7.25" r="0.75" fill="#3A3636" />
+    <circle cx="3.75" cy="7.25" r="0.75" fill="black" />
   </svg>
 </template>

@@ -4,7 +4,7 @@
       <v-app-bar class="nav-bar" elevate="0" flat color="deep-orange accent-4">
         <v-icon size="200">$vuetify.icons.custom</v-icon>
         <v-spacer></v-spacer>
-        <router-link v-if="loggedIn" style="text-decoration: none" to="/write">
+        <router-link v-if="loggedIn" style="text-decoration: none" to="/about">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
@@ -58,7 +58,7 @@ export default {
 }
 
 .front {
-  width: 1100px;
+  max-width: 1100px;
   margin-top: 140px;
   margin: auto;
 }
