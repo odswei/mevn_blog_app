@@ -16,23 +16,25 @@ var text= "this is the text to be encrypted";
     return encrypted
    }
    
-function decrypt(req,res,next) {
+function decrypt(req,res,next){
     const key = crypto.scryptSync(password, 'salt', 24); //create key
-    console.log("d",key)
     const iv = "9bd717d681151874";
-    console.log("d",iv)
     const hero = req.headers.authorization
     const decipher = crypto.createDecipheriv(algorithm, key, iv);
 
     var decrypted = decipher.update(hero, 'hex', 'utf8') + decipher.final('utf8'); //deciphered text
 
     const token = decrypted
+
     const hello = JSON.parse(token)
     req.headers.authorization=hello.token
-    console.log(hello.token)
-    next()
+
+   next()
    }
 
-   module.exports.encrypt = encrypt
-   module.exports.decrypt = decrypt
+   module.exports = {
+      encrypt,
+      decrypt
+   }
+
 

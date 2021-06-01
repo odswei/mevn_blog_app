@@ -1,268 +1,203 @@
 <template>
-  <div class="editor-container">
-    <!-- <div class="checkbox">
-      <input type="checkbox" id="editable" v-model="editable" />
-      <label for="editable">editable</label>
-    </div> -->
-
-    <div class="toolbar-container" v-if="editor">
-      <button
-        @click="editor.chain().focus().toggleBold().run()"
-        :class="{ 'is-active': editor.isActive('bold') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.bold_btn</v-icon>
-      </button>
-
-      <button
-        @click="editor.chain().focus().toggleItalic().run()"
-        :class="{ 'is-active': editor.isActive('italic') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.italic_btn</v-icon>
-      </button>
-
-      <button
-        @click="editor.chain().focus().toggleStrike().run()"
-        :class="{ 'is-active': editor.isActive('strike') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.strike_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleCode().run()"
-        :class="{ 'is-active': editor.isActive('code') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.code_btn</v-icon>
-      </button>
-      <button @click="editor.chain().focus().unsetAllMarks().run()">
-        <v-icon size="35" class="icon">$vuetify.icons.clear_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().setParagraph().run()"
-        :class="{ 'is-active': editor.isActive('paragraph') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.paragraph_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h1_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h2_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h3_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h4_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h5_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.h6_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleBulletList().run()"
-        :class="{ 'is-active': editor.isActive('bulletList') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.bullet_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleOrderedList().run()"
-        :class="{ 'is-active': editor.isActive('orderedList') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.number_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'is-active': editor.isActive('codeBlock') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.codeblock_btn</v-icon>
-      </button>
-      <button
-        @click="editor.chain().focus().toggleBlockquote().run()"
-        :class="{ 'is-active': editor.isActive('blockquote') }"
-      >
-        <v-icon size="35" class="icon">$vuetify.icons.blockquote_btn</v-icon>
-      </button>
-      <button @click="editor.chain().focus().setHorizontalRule().run()">
-        <v-icon size="35" class="icon">$vuetify.icons.hrule_btn</v-icon>
-      </button>
-      <button @click="editor.chain().focus().setHardBreak().run()">
-        <v-icon size="35" class="icon">$vuetify.icons.hardbreak_btn</v-icon>
-      </button>
-      <button @click="editor.chain().focus().undo().run()">
-        <v-icon size="35" class="icon">$vuetify.icons.undo_btn</v-icon>
-      </button>
-      <button @click="editor.chain().focus().redo().run()">
-        <v-icon size="35" class="icon">$vuetify.icons.redo_btn</v-icon>
-      </button>
+  <div class="about">
+    <div class="series">
+      <span class="no-series">1</span>
+      <span class="series-chapter">
+        <div class="series-title">Series Title</div>
+        <div class="chapter">
+          <span class="no-chapter">1.</span>
+          <span class="chapter-title"
+            ><input v-model="c_title" placeholder="Chapter Title . ."
+          /></span>
+        </div>
+      </span>
     </div>
-    <editor-content class="editor-content-container" :editor="editor" />
+
+    <editor v-model="content" placeholder="hello" />
+
+    <v-btn
+      class="btn"
+      @click="chapterPublishing"
+      color="blue accent-4"
+      depressed
+      rounded
+      >Publish</v-btn
+    >
+    <!-- <v-btn @click="chapterSave" class="btn" color="error" depressed rounded
+      >Save</v-btn
+    > -->
+
+    <div class="content">
+      <h3>Content</h3>
+      <pre><code>{{ hellow }}</code></pre>
+    </div>
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent } from "@tiptap/vue-2";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
+import axios from "axios";
+import Editor from "@/components/Editor";
 
 export default {
   components: {
-    EditorContent,
+    Editor,
   },
-
-  props: {
-    value: {
-      type: Object,
-      default: null,
-    },
-  },
-
   data() {
     return {
-      editor: null,
-      // editable: false,
-      preview: null,
+      content: null,
+      c_title: null,
+      chapter_no: 1,
+      tags: ["mongodb", "mongoose"],
     };
   },
-
-  watch: {
-    value(value) {
-      // HTML
-      // const isSame = this.editor.getHTML() === value;
-
-      // JSON
-      const isSame = this.editor.getJSON().toString() === value.toString();
-
-      if (isSame) {
-        return;
-      }
-
-      this.editor.commands.setContent(this.value, false);
+  computed: {
+    hellow() {
+      console.log(typeof this.content);
+      return this.content;
     },
   },
+  methods: {
+    // chapterSave() {
+    //   const hello = String(this.content);
 
-  mounted() {
-    this.editor = new Editor({
-      // editable: this.editable,
-      extensions: [StarterKit, Placeholder],
-      content: this.value,
-      onUpdate: () => {
-        // HTML
-        //this.$emit("input", this.editor.getHTML());
+    //   let chapter_content = {
+    //     contents: hello,
+    //     c_title: this.c_title,
+    //     chapter_no: 1,
+    //     tags: ["mongodb", "mongoose"],
+    //     published: false,
+    //   };
+    //   const token = this.$store.state.user.hw;
+    //   if (token) {
+    //     axios.defaults.headers.common["Authorization"] = token;
+    //     axios
+    //       .post(
+    //         "//localhost:3001/series/60b5c1307c56d8260cf6301a",
+    //         chapter_content
+    //       )
+    //       .then(() => {
+    //         console.log(chapter_content);
+    //         this.$router.push({ name: "Home" });
+    //       });
+    //   }
+    // },
+    chapterPublishing() {
+      const hello = this.hellow;
 
-        // JSON
-        this.$emit("input", this.editor.getJSON());
-      },
-    });
-  },
-
-  beforeDestroy() {
-    this.editor.destroy();
+      let chapter_content = {
+        contents: hello,
+        c_title: this.c_title,
+        chapter_no: 1,
+        tags: ["mongodb", "mongoose"],
+        published: true,
+      };
+      const token = this.$store.state.user.hw;
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = token;
+        axios
+          .post(
+            "//localhost:3001/series/60b5c1307c56d8260cf6301a",
+            chapter_content
+          )
+          .then(() => {
+            this.$router.push({ name: "Home" });
+          });
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss">
-.editor-content-container {
-  padding: 10px;
-  background-color: #fff;
-  //background-color: antiquewhite;
+<style lang="scss" scoped>
+.chapter {
+  margin: 0 !important;
+  padding: 0 !important;
+  // background-color: aliceblue;
+  flex-wrap: nowrap;
 }
-.editor-content-container :focus {
+.series {
+  // background-color: black;
+  margin-bottom: 30px;
+  padding: 0px 10px 0px 10px;
+}
+.no-series {
+  font-size: 4em;
+  // background-color: antiquewhite;
+  float: left;
+  padding-right: 10px;
+}
+input {
+  min-width: 75%;
+  // background-color: #ff2d2d;
+  -ms-box-sizing: border-box; /* ie8 */
+  -khtml-box-sizing: border-box; /* konqueror */
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+  box-sizing: border-box; /* css3 rec */
+}
+input:focus {
   outline: none;
 }
-.toolbar-container {
-  margin-bottom: 20px;
+
+.series-chapter {
+  // background-color: #ff2d2d;
+  display: block;
+}
+.series-title {
+  font-size: 2em;
+  padding-left: 10px;
+}
+.no-chapter {
+  font-size: 1.5em;
   // background-color: #616161;
+  padding-right: 10px;
 }
-.icon {
-  margin-right: 10px;
-}
-.editor-container {
+.chapter-title {
   // background-color: aqua;
+  font-size: 1.5em;
 }
-/* Basic editor styles */
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
-
-  ul,
-  ol {
-    padding: 0 1rem;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
-  }
-
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
-
-  pre {
-    background: #1d1c1c;
-    color: #fff;
-    font-family: "JetBrainsMono", monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
+.about {
+  padding: 30px 20px 20px 20px;
+}
+::v-deep {
+  /* Basic editor styles */
+  .ProseMirror {
+    > * + * {
+      margin-top: 0.75em;
+    }
 
     code {
-      color: inherit;
-      padding: 0;
-      background: none;
-      font-size: 0.8rem;
+      background-color: rgba(#616161, 0.1);
+      color: #616161;
     }
   }
 
-  img {
-    max-width: 100%;
-    height: auto;
-  }
+  .content {
+    padding: 1rem 0 0;
 
-  blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid rgba(#0d0d0d, 0.1);
-  }
+    h3 {
+      margin: 1rem 0 0.5rem;
+    }
 
-  hr {
-    border: none;
-    border-top: 2px solid rgba(#0d0d0d, 0.1);
-    margin: 2rem 0;
+    pre {
+      border-radius: 5px;
+      color: #333;
+    }
+
+    code {
+      display: block;
+      white-space: pre-wrap;
+      font-size: 0.8rem;
+      padding: 0.75rem 1rem;
+      background-color: #e9ecef;
+      color: #495057;
+    }
   }
 }
-
-.ProseMirror p.is-editor-empty:first-child::before {
-  content: attr(data-placeholder);
-  float: left;
-  color: #ced4da;
-  pointer-events: none;
-  height: 0;
-  font-size: 1.3em;
-  margin-top: -3px;
+.btn {
+  float: right;
+  margin: 30px 15px 0px 15px;
+  color: white;
 }
 </style>

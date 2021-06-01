@@ -38,4 +38,12 @@ const newChapter = new Chapter({
   
 });
 
+router.get('/chapter/:id',(req,res,next)=>{
+    const _id = req.params.id
+    Chapter.findById(_id).then((response)=>{
+        res.send(response)
+    })
+})
+
+
 module.exports = router;

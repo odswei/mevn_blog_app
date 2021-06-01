@@ -5,6 +5,9 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Editor from "../views/Editor.vue";
+import Chapter from "../views/Chapter.vue";
+import Series from "../views/Series.vue";
+import Myseries from "../views/Myseries.vue";
 
 Vue.use(VueRouter);
 
@@ -15,7 +18,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/write",
+    path: "/editor",
     name: "Editor",
     component: Editor,
     meta: {
@@ -31,14 +34,24 @@ const routes = [
     },
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/chapter/:id",
+    name: "Chapter",
+    component: Chapter,
   },
+  {
+    path: "/series/:id",
+    name: "Series",
+    component: Series,
+  },
+  // {
+  //   path: "/about",
+  //   name: "About",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  // },
   {
     path: "/register",
     name: "Register",
@@ -48,6 +61,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+  },
+  {
+    path: "/myseries",
+    name: "Myseries",
+    component: Myseries,
   },
 ];
 

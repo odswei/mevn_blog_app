@@ -1,0 +1,34 @@
+<template>
+  <svg
+    width="104"
+    height="26"
+    viewBox="0 0 104 26"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line
+      x1="12.3709"
+      y1="13.8447"
+      x2="103.613"
+      y2="11.6193"
+      stroke="#ADADAD"
+      stroke-width="3"
+    />
+    <circle
+      cx="12.4076"
+      cy="13.0632"
+      r="10.6241"
+      fill="white"
+      stroke="#9C9C9C"
+      stroke-width="3"
+    />
+    <circle
+      cx="78.5575"
+      cy="13.0632"
+      r="10.6241"
+      fill="#CBCBCB"
+      stroke="#534F4F"
+      stroke-width="3"
+    />
+  </svg>
+</template>

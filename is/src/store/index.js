@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
+    series: null,
   },
   mutations: {
     SET_USER_DATA(state, userData) {
@@ -19,6 +20,12 @@ export default new Vuex.Store({
     CLEAR_USER_DATA() {
       localStorage.removeItem("xhtrvbq");
       location.reload();
+    },
+    SET_SERIES(state, seriesData) {
+      state.series = seriesData;
+    },
+    GET_CHAPTERS(state, seriesData) {
+      state.series = seriesData;
     },
   },
   actions: {
@@ -37,6 +44,18 @@ export default new Vuex.Store({
     logout({ commit }) {
       commit("CLEAR_USER_DATA");
     },
+    getSeries({ commit }) {
+      return axios.get(`//localhost:3001/myseries`).then(({ data }) => {
+        commit("SET_SERIES", data);
+      });
+    },
+    setSeries({ commit }, seriesData) {
+      commit("SET_SERIES", seriesData);
+    },
+    // getChapters({ commit }, series_id) {
+    //   return axios
+    //     .get(`//localhost:3001/series/${series_id}`)
+    // },
   },
   modules: {},
   getters: {

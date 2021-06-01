@@ -2,13 +2,22 @@
   <v-app id="main">
     <v-container fluid class="bar-container">
       <v-app-bar class="nav-bar" elevate="0" flat color="deep-orange accent-4">
-        <v-icon size="200">$vuetify.icons.custom</v-icon>
+        <router-link to="/"
+          ><v-icon size="80" class="color">$vuetify.icons.custom </v-icon>
+        </router-link>
         <v-spacer></v-spacer>
-        <router-link v-if="loggedIn" style="text-decoration: none" to="/about">
+        <router-link v-if="loggedIn" style="text-decoration: none" to="/editor">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
           </v-btn></router-link
+        >
+        <router-link
+          v-if="loggedIn"
+          style="text-decoration: none"
+          to="/myseries"
+        >
+          <v-btn plain class="write-button"> My Series </v-btn></router-link
         >
         <router-link
           v-if="!loggedIn"

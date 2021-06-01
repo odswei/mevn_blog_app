@@ -14,31 +14,37 @@
         </v-card>
       </v-col>
     </v-row> -->
-    <main-card class="bar" />
-    <profile-photo />
-    <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div>
+    <!-- <main-card class="bar" />
+    <profile-photo /> -->
+    <!-- <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div> -->
+
+    <card-series :series="posts" />
   </v-container>
 </template>
 
 <script>
-import MainCard from "../components/MainCard.vue";
+// import MainCard from "../components/MainCard.vue";
 // @ is an alias to /src
-import ProfilePhoto from "../components/ProfilePhoto.vue";
+// import ProfilePhoto from "../components/ProfilePhoto.vue";
 import axios from "axios";
+
+import CardSeries from "../components/CardSeries.vue";
 export default {
   components: {
-    ProfilePhoto,
-    MainCard,
+    // ProfilePhoto,
+    // MainCard,
+
+    CardSeries,
   },
   data() {
     return {
-      posts: "hello world",
+      posts: null,
       loading: false,
       selection: 1,
     };
   },
 
-  mounted() {
+  created() {
     axios
       .get("//localhost:3001/series")
       .then(({ data }) => (this.posts = data));

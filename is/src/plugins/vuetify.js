@@ -1,28 +1,31 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib/framework";
-import CustomIcon from "@/components/CustomIcon.vue";
-import DeleteIcon from "@/components/DeleteIcon.vue";
-import BoldIcon from "@/components/BoldIcon.vue";
-import ItalicIcon from "@/components/ItalicIcon.vue";
-import UnderlineIcon from "@/components/UnderlineIcon.vue";
-import StrikeIcon from "@/components/StrikeIcon.vue";
-import CodeIcon from "@/components/CodeIcon.vue";
-import ClearIcon from "@/components/ClearIcon.vue";
-import ParagraphIcon from "@/components/ParagraphIcon.vue";
-import H1Icon from "@/components/H1Icon.vue";
-import H2Icon from "@/components/H2Icon.vue";
-import H3Icon from "@/components/H3Icon.vue";
-import H4Icon from "@/components/H4Icon.vue";
-import H5Icon from "@/components/H5Icon.vue";
-import H6Icon from "@/components/H6Icon.vue";
-import BulletIcon from "@/components/BulletIcon.vue";
-import NumberIcon from "@/components/NumberIcon.vue";
-import CodeBlockIcon from "@/components/CodeBlockIcon.vue";
-import BlockQuoteIcon from "@/components/BlockQuoteIcon.vue";
-import HRuleIcon from "@/components/HRuleIcon.vue";
-import HardBreakIcon from "@/components/HardBreakIcon.vue";
-import UndoIcon from "@/components/UndoIcon.vue";
-import RedoIcon from "@/components/RedoIcon.vue";
+import CustomIcon from "@/components/Icons/CustomIcon.vue";
+import DeleteIcon from "@/components/Icons/DeleteIcon.vue";
+import BoldIcon from "@/components/Icons/BoldIcon.vue";
+import ItalicIcon from "@/components/Icons/ItalicIcon.vue";
+import UnderlineIcon from "@/components/Icons/UnderlineIcon.vue";
+import StrikeIcon from "@/components/Icons/StrikeIcon.vue";
+import CodeIcon from "@/components/Icons/CodeIcon.vue";
+import ClearIcon from "@/components/Icons/ClearIcon.vue";
+import ParagraphIcon from "@/components/Icons/ParagraphIcon.vue";
+import H1Icon from "@/components/Icons/H1Icon.vue";
+import H2Icon from "@/components/Icons/H2Icon.vue";
+import H3Icon from "@/components/Icons/H3Icon.vue";
+import H4Icon from "@/components/Icons/H4Icon.vue";
+import H5Icon from "@/components/Icons/H5Icon.vue";
+import H6Icon from "@/components/Icons/H6Icon.vue";
+import BulletIcon from "@/components/Icons/BulletIcon.vue";
+import NumberIcon from "@/components/Icons/NumberIcon.vue";
+import CodeBlockIcon from "@/components/Icons/CodeBlockIcon.vue";
+import BlockQuoteIcon from "@/components/Icons/BlockQuoteIcon.vue";
+import HRuleIcon from "@/components/Icons/HRuleIcon.vue";
+import HardBreakIcon from "@/components/Icons/HardBreakIcon.vue";
+import UndoIcon from "@/components/Icons/UndoIcon.vue";
+import RedoIcon from "@/components/Icons/RedoIcon.vue";
+import FollowerIcon from "@/components/Icons/FollowerIcon.vue";
+import ClapsIcon from "@/components/Icons/ClapsIcon.vue";
+import StepsIcon from "@/components/Icons/StepsIcon.vue";
 
 Vue.use(Vuetify);
 
@@ -120,6 +123,18 @@ export default new Vuetify({
       redo_btn: {
         // name of our custom icon
         component: RedoIcon, // our custom component
+      },
+      follower_btn: {
+        // name of our custom icon
+        component: FollowerIcon, // our custom component
+      },
+      claps_btn: {
+        // name of our custom icon
+        component: ClapsIcon, // our custom component
+      },
+      steps_btn: {
+        // name of our custom icon
+        component: StepsIcon, // our custom component
       },
     },
   },

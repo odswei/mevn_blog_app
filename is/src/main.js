@@ -25,6 +25,7 @@ new Vue({
         return Promise.reject(error);
       }
     );
+    axios.defaults.headers.common["Authorization"] = chimney;
   },
   vuetify,
   render: (h) => h(App),

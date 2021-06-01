@@ -1,15 +1,25 @@
 const mongoose = require('mongoose')
 const router = require('express').Router()
 const Series = mongoose.model('Series')
+const Chapter = mongoose.model('Chapter')
 const passport = require('passport')
 const enc = require('../helpers/encrypt')
 
 router.post('/series',enc.decrypt,passport.authenticate('jwt',{session:false}),function(req, res, next){
     const user_id = req.user.id
+    const username = req.user.username
     const s_title = req.body.s_title
+    const followers = req.body.followers
+    const claps = req.body.claps
+
 
 const newSeries = new Series({
-    user_id:user_id, s_title:s_title
+    username:username,
+    uid:user_id,
+    s_title:s_title,
+    followers:followers,
+    claps:claps,
+
 })
 
     newSeries.save()
@@ -19,8 +29,10 @@ const newSeries = new Series({
         }
         
         // Function defined at bottom of app.js
-       
-        res.send({series:series})
+        Series.find({uid:user_id}).then(response=>{
+            res.send(response)
+        })
+
     })
     .catch((err) => {
         next(err);
@@ -29,15 +41,24 @@ const newSeries = new Series({
 });
 
 
-router.get('/series/:id',enc.decrypt,passport.authenticate('jwt',{session:false}),function(req,res,next){
-    const series_id = req.params.id
-    Series.findById(series_id).then(response=>{
+
+
+router.get('/series', function(req,res,next){
+    Series.find().then(response=>{
         res.send(response)
     })
 })
 
-router.get('/series', function(req,res,next){
-    Series.find().then(response=>{
+router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}), function(req,res,next){
+    const user_id = req.user.id
+    Series.find({uid:user_id}).then(response=>{
+        res.send(response)
+    })
+})
+
+
+router.get('/series/:id', function(req,res,next){
+    Chapter.find({series_id:req.params.id}).then(response=>{
         res.send(response)
     })
 })

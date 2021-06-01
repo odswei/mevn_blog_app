@@ -9,6 +9,7 @@ const Series = mongoose.model('Series')
 const Image = mongoose.model('Image')
 const fs = require('fs')
 const path = require('path')
+const { response } = require('express')
 
 
 
@@ -79,22 +80,23 @@ router.post('/register', function(req, res, next){
 });
 
 
-router.get('/',(req,res,next)=>{
-
-    res.json("hi")
-})
-
-router.get('/me',enc.decrypt,passport.authenticate('jwt',{session:false}),(req,res,next)=>{
+router.get('/',enc.decrypt,passport.authenticate('jwt',{session:false}),(req,res,next)=>{
 
     res.json(req.user)
 })
 
-router.get('/series',function(req,res,next){
+// router.get('/user/:id',(req,res,next)=>{
+//     User.findById(req.params.id).then((response)=>{
+//         res.json(response.username)
+//     })
+// })
+
+// router.get('/series',function(req,res,next){
     
-    Series.find().then(response=>{
-        res.json(response)
-    })
-})
+//     Series.find().then(response=>{
+//         res.json(response.username)
+//     })
+// })
 
 router.post('/upp',enc.decrypt,passport.authenticate('jwt',{session:false}),function(req,res,next){
     const uid = req.user._id

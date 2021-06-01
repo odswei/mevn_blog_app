@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const seriesSchema = new mongoose.Schema({
         uid:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         s_title:String,
-        followers:[mongoose.Schema.Types.ObjectId],
-        claps:[mongoose.Schema.Types.ObjectId],
+        followers:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}],
+        claps:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}],
 })
 
 mongoose.model('Series',seriesSchema)
