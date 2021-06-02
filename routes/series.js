@@ -58,9 +58,15 @@ router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}),
 
 
 router.get('/series/:id', function(req,res,next){
-    Chapter.find({series_id:req.params.id}).then(response=>{
-        res.send(response)
+Series.findById(req.params.id)
+    .then(data =>{
+        const series = data
+        Chapter.find({series_id:req.params.id}).then(chapter=>{
+          res.send({series,chapter})
+            })
+
     })
+   
 })
 
 module.exports = router;

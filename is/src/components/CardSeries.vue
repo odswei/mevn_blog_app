@@ -9,7 +9,7 @@
           md="4"
           sm="6"
         >
-          <v-card class="mx-auto" max-width="360" outlined>
+          <v-card class="mx-auto" max-width="374" outlined>
             <div class="card-align">
               <v-card-text>
                 <v-avatar color="primary avatar-margin" size="107">

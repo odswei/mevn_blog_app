@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       series_title: null,
+      change: false,
     };
   },
   computed: {
@@ -48,9 +49,13 @@ export default {
     series() {
       return this.$store.state.series;
     },
+    change() {
+      this.$store.dispatch("getSeries");
+      this.change = false;
+    },
   },
 
-  async created() {
+  created() {
     this.$store.dispatch("getSeries");
   },
   methods: {
@@ -58,7 +63,7 @@ export default {
       axios
         .post("//localhost:3001/series", { s_title: this.series_title })
         .then(({ data }) => {
-          this.$store.dispatch("setSeries", { data });
+          (this.change = true), this.$store.dispatch("setSeries", { data });
         });
     },
   },

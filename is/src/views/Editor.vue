@@ -3,17 +3,19 @@
     <div class="series">
       <span class="no-series">1</span>
       <span class="series-chapter">
-        <div class="series-title">Series Title</div>
+        <div class="series-title">{{ content.series.s_title }}</div>
         <div class="chapter">
           <span class="no-chapter">1.</span>
           <span class="chapter-title"
-            ><input v-model="c_title" placeholder="Chapter Title . ."
+            ><input
+              v-model="content.chapter.c_title"
+              placeholder="Chapter Title . ."
           /></span>
         </div>
       </span>
     </div>
 
-    <editor v-model="content" placeholder="hello" />
+    <editor v-model="content.chapter.contents" placeholder="hello" />
 
     <v-btn
       class="btn"
@@ -26,11 +28,11 @@
     <!-- <v-btn @click="chapterSave" class="btn" color="error" depressed rounded
       >Save</v-btn
     > -->
-
+    <!-- 
     <div class="content">
       <h3>Content</h3>
       <pre><code>{{ hellow }}</code></pre>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -104,6 +106,13 @@ export default {
           });
       }
     },
+  },
+  created() {
+    axios
+      .get(`//localhost:3001/editor/${this.$route.params.id}`)
+      .then(({ data }) => {
+        this.content = data;
+      });
   },
 };
 </script>

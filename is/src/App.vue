@@ -6,12 +6,12 @@
           ><v-icon size="80" class="color">$vuetify.icons.custom </v-icon>
         </router-link>
         <v-spacer></v-spacer>
-        <router-link v-if="loggedIn" style="text-decoration: none" to="/editor">
+        <!-- <router-link v-if="loggedIn" style="text-decoration: none" to="/editor">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
           </v-btn></router-link
-        >
+        > -->
         <router-link
           v-if="loggedIn"
           style="text-decoration: none"

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const router = require('express').Router()
 const Chapter = mongoose.model('Chapter')
+const Series = mongoose.model('Series')
 const passport = require('passport')
 const util = require('../helpers/util')
 const enc = require('../helpers/encrypt')
@@ -44,6 +45,20 @@ router.get('/chapter/:id',(req,res,next)=>{
         res.send(response)
     })
 })
+
+router.get('/editor/:id',(req,res,next)=>{
+    const _id = req.params.id
+
+    Chapter.findById(_id).then((response)=>{
+        const chapter = response
+        Series.findById(response.series_id).then((series)=>{
+            res.send({series,chapter})
+        })
+
+    })
+})
+
+
 
 
 module.exports = router;

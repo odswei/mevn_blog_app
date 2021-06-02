@@ -18,7 +18,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/editor",
+    path: "/editor/:id",
     name: "Editor",
     component: Editor,
     meta: {
@@ -66,6 +66,9 @@ const routes = [
     path: "/myseries",
     name: "Myseries",
     component: Myseries,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 
