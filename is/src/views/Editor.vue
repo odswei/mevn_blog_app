@@ -3,21 +3,32 @@
     <div class="series">
       <span class="no-series">1</span>
       <span class="series-chapter">
-        <div class="series-title">{{ content.series.s_title }}</div>
+        <div class="series-title">
+          {{ s_title }}
+        </div>
         <div class="chapter">
           <span class="no-chapter">1.</span>
           <span class="chapter-title"
-            ><input
-              v-model="content.chapter.c_title"
-              placeholder="Chapter Title . ."
+            ><input v-model="c_title" placeholder="Chapter Title . ."
           /></span>
         </div>
       </span>
     </div>
 
-    <editor v-model="content.chapter.contents" placeholder="hello" />
+    <editor v-model="content" placeholder="hello" />
 
     <v-btn
+      v-if="content"
+      class="btn"
+      @click="chapterEdit"
+      color="blue accent-4"
+      depressed
+      rounded
+      >Edit</v-btn
+    >
+
+    <v-btn
+      v-else
       class="btn"
       @click="chapterPublishing"
       color="blue accent-4"
@@ -46,6 +57,8 @@ export default {
   },
   data() {
     return {
+      id: null,
+      s_title: null,
       content: null,
       c_title: null,
       chapter_no: 1,
@@ -106,12 +119,36 @@ export default {
           });
       }
     },
+    chapterEdit() {
+      // const hello = this.hellow;
+
+      let chapter_content = {
+        contents: this.content,
+        c_title: this.c_title,
+        chapter_no: 1,
+        tags: ["mongodb", "mongoose"],
+        published: true,
+      };
+      const token = this.$store.state.user.hw;
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = token;
+        axios.post(`//localhost:3001/chapter/${this.id}`, chapter_content);
+        // .then(() => {
+        //   this.$router.push({ name: "Home" });
+        // });
+      }
+      console.log(chapter_content);
+    },
   },
   created() {
     axios
       .get(`//localhost:3001/editor/${this.$route.params.id}`)
       .then(({ data }) => {
-        this.content = data;
+        console.log(data);
+        this.s_title = data.series.s_title;
+        this.content = data.chapter.contents;
+        this.c_title = data.chapter.c_title;
+        this.id = data.chapter._id;
       });
   },
 };

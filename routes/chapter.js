@@ -39,6 +39,29 @@ const newChapter = new Chapter({
   
 });
 
+router.post('/chapter/:id', enc.decrypt,passport.authenticate('jwt', { session: false }), function(req, res, next){
+    const series_id = req.params.id
+    const chapter_no = req.body.chapter_no
+    const c_title = req.body.c_title
+    const tags = req.body.tags
+    const contents = req.body.contents
+    const published = req.body.published
+
+const newChapter = {
+    chapter_no:chapter_no,
+    c_title:c_title,
+    contents:contents,
+    tags:tags,
+    published:published,
+}
+
+ Chapter.findOneAndUpdate({_id:req.params.id},{$set:newChapter},{new:true,useFindAndModify: false},function (err) {
+    if (err) return console.error(err);         
+})
+
+  
+});
+
 router.get('/chapter/:id',(req,res,next)=>{
     const _id = req.params.id
     Chapter.findById(_id).then((response)=>{

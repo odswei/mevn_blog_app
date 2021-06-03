@@ -43,6 +43,7 @@ const newSeries = new Series({
 
 
 
+
 router.get('/series', function(req,res,next){
     Series.find().then(response=>{
         res.send(response)
