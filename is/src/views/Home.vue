@@ -15,10 +15,13 @@
       </v-col>
     </v-row> -->
     <!-- <main-card class="bar" />
+  
     <profile-photo /> -->
     <!-- <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div> -->
-
-    <card-series :series="posts" />
+    <!-- {{ posts }} -->
+    <input type="text" v-model="search_query" placeholder="search . ." />
+    <br />
+    <card-series :series="resultQuery" />
   </v-container>
 </template>
 
@@ -33,7 +36,6 @@ export default {
   components: {
     // ProfilePhoto,
     // MainCard,
-
     CardSeries,
   },
   data() {
@@ -41,13 +43,31 @@ export default {
       posts: null,
       loading: false,
       selection: 1,
+      componentLoaded: false,
+      search_query: null,
     };
+  },
+
+  computed: {
+    resultQuery() {
+      if (this.componentLoaded && this.search_query) {
+        const search = this.search_query.toLowerCase();
+        // console.log(typeof search) const search = this.lookfor.toLowerCase()
+        return this.posts.filter(
+          (post) =>
+            typeof post.s_title === "string" &&
+            post.s_title.toLowerCase().includes(search)
+        );
+      } else {
+        return this.posts;
+      }
+    },
   },
 
   created() {
     axios
       .get("//localhost:3001/series")
-      .then(({ data }) => (this.posts = data));
+      .then(({ data }) => ((this.componentLoaded = true), (this.posts = data)));
   },
 };
 </script>

@@ -17,10 +17,7 @@
                 >
 
                 <div class="avatar-margin">
-                  {{
-                    series.username.charAt(0).toUpperCase() +
-                    series.username.slice(1)
-                  }}
+                  {{ series.username }}
                 </div>
                 <div class="text--primary box">
                   <h2>
