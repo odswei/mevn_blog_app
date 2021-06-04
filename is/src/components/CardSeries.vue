@@ -17,14 +17,14 @@
                 >
 
                 <div class="avatar-margin">
-                  {{ series.username }}
+                  {{ series.uid.username }}
                 </div>
                 <div class="text--primary box">
                   <h2>
                     <router-link
                       class="series-title"
                       :to="{ name: 'Series', params: { id: series._id } }"
-                      >{{ series.s_title }} and fullstack with another tools!!
+                      >{{ series.s_title }}
                     </router-link>
                   </h2>
                 </div>

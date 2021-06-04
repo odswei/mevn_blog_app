@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
 const chapterSchema = new mongoose.Schema({
-       series_id : {type: mongoose.Schema.Types.ObjectId, ref: 'Series'},
-       chapter_no:{ type: Number, min: 0, max: 20 },
-        c_title: String,
-        contents:String,
+        chapter_no:{ type: Number, min: 0, max: 50 },
+        c_title: { type: String, required: true },
+        contents:{ type: String, required: true },
         update:{ type: Date, default: Date.now },
         tags:[String],
         published:Boolean,
+        series_id: mongoose.Schema.Types.ObjectId
         
 })
 

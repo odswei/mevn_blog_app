@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <!-- <v-row>
-      <v-col v-for="{ post } in posts" :key="post._id" cols="12" md="6" sm="12">
+      <v-col v-for="{ post } in series" :key="post._id" cols="12" md="6" sm="12">
         <v-card elevation="0">
           <div v-for="(content, index) in post" :key="index">
             <p :class="Object.keys(content)[1]">
@@ -17,8 +17,8 @@
     <!-- <main-card class="bar" />
   
     <profile-photo /> -->
-    <!-- <div v-for="(post, index) of posts" :key="index">{{ post.s_title }}</div> -->
-    <!-- {{ posts }} -->
+    <!-- <div v-for="(post, index) of series" :key="index">{{ post.s_title }}</div> -->
+    <!-- {{ series }} -->
     <input type="text" v-model="search_query" placeholder="search . ." />
     <br />
     <card-series :series="resultQuery" />
@@ -40,9 +40,7 @@ export default {
   },
   data() {
     return {
-      posts: null,
-      loading: false,
-      selection: 1,
+      series: null,
       componentLoaded: false,
       search_query: null,
     };
@@ -53,13 +51,13 @@ export default {
       if (this.componentLoaded && this.search_query) {
         const search = this.search_query.toLowerCase();
         // console.log(typeof search) const search = this.lookfor.toLowerCase()
-        return this.posts.filter(
+        return this.series.filter(
           (post) =>
             typeof post.s_title === "string" &&
             post.s_title.toLowerCase().includes(search)
         );
       } else {
-        return this.posts;
+        return this.series;
       }
     },
   },
@@ -67,7 +65,9 @@ export default {
   created() {
     axios
       .get("//localhost:3001/series")
-      .then(({ data }) => ((this.componentLoaded = true), (this.posts = data)));
+      .then(
+        ({ data }) => ((this.componentLoaded = true), (this.series = data))
+      );
   },
 };
 </script>

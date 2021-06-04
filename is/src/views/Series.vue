@@ -1,15 +1,20 @@
 <template>
   <div class="container">
     <div v-if="series">
-      <h2>{{ series.series.s_title }}</h2>
-      <p>followers: {{ series.series.followers.length }}</p>
-      <p>claps: {{ series.series.claps.length }}</p>
-      <div v-for="chapter in series.chapter" :key="chapter._id">
-        <router-link
+      <h1>{{ series.s_title }}</h1>
+      <p>followers: {{ series.followers.length }}</p>
+      <p>claps: {{ series.claps.length }}</p>
+      <div v-for="chapter in series.chapters" :key="chapter._id">
+        <!-- <router-link
           v-if="typeof chapter._id !== 'undefined'"
-          :to="{ name: 'Chapter', params: { id: chapter._id } }"
-          ><p>Chapter {{ chapter.c_title }}</p></router-link
-        >
+          :to="{
+            name: 'Chapter',
+            params: { series_id: series._id, chapter_id: chapter._id },
+          }"
+          ><h2>{{ chapter.c_title }}</h2></router-link
+        > -->
+        <h2>{{ chapter.c_title }}</h2>
+        <p>{{ chapter.contents }}</p>
         <router-link
           v-if="loggedIn"
           style="text-decoration: none"
@@ -39,7 +44,7 @@ export default {
   },
   async created() {
     await axios
-      .get(`//localhost:3001/series/${this.$route.params.id}`)
+      .get(`//localhost:3001/series/${this.$route.params.id}/chapters`)
       .then(({ data }) => {
         this.series = data;
       });
