@@ -37,26 +37,23 @@ export default {
     return {
       series_title: null,
       change: false,
+      series: null,
     };
   },
-  computed: {
-    series() {
-      return this.$store.state.series;
-    },
-  },
-
   watch: {
-    series() {
-      return this.$store.state.series;
-    },
     change() {
-      this.$store.dispatch("getSeries");
+      axios.get(`//localhost:3001/myseries`).then(({ data }) => {
+        this.series = data;
+      });
       this.change = false;
     },
   },
 
   created() {
-    this.$store.dispatch("getSeries");
+    axios.defaults.headers.common["Authorization"] = this.$store.state.user.hw;
+    axios.get(`//localhost:3001/myseries`).then(({ data }) => {
+      this.series = data;
+    });
   },
   methods: {
     addSeries() {

@@ -57,6 +57,7 @@ export default {
   },
   data() {
     return {
+      series_id: null,
       id: null,
       s_title: null,
       content: null,
@@ -132,10 +133,14 @@ export default {
       const token = this.$store.state.user.hw;
       if (token) {
         axios.defaults.headers.common["Authorization"] = token;
-        axios.post(`//localhost:3001/chapter/${this.id}`, chapter_content);
-        // .then(() => {
-        //   this.$router.push({ name: "Home" });
-        // });
+        axios
+          .post(`//localhost:3001/chapter/${this.id}`, chapter_content)
+          .then(() => {
+            this.$router.push({
+              name: "Series",
+              params: { id: this.series_id },
+            });
+          });
       }
       console.log(chapter_content);
     },
@@ -145,6 +150,7 @@ export default {
       .get(`//localhost:3001/editor/${this.$route.params.id}`)
       .then(({ data }) => {
         console.log(data);
+        this.series_id = data.series._id;
         this.s_title = data.series.s_title;
         this.content = data.chapter.contents;
         this.c_title = data.chapter.c_title;

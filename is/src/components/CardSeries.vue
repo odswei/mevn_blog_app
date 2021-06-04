@@ -16,7 +16,7 @@
                   <span class="white--text text-h5">DS</span></v-avatar
                 >
 
-                <div class="avatar-margin" v-if="typeof series == !undefined">
+                <div class="avatar-margin">
                   {{
                     series.username.charAt(0).toUpperCase() +
                     series.username.slice(1)

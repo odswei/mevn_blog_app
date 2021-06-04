@@ -55,8 +55,9 @@ const newChapter = {
     published:published,
 }
 
- Chapter.findOneAndUpdate({_id:req.params.id},{$set:newChapter},{new:true,useFindAndModify: false},function (err) {
-    if (err) return console.error(err);         
+ Chapter.findOneAndUpdate({_id:req.params.id},{$set:newChapter},{new:true,useFindAndModify: false},function (err,doc) {
+    if (err) return console.error(err);       
+    res.send(doc)  
 })
 
   
