@@ -58,6 +58,10 @@ export default {
 </script>
 
 <style scoped>
+#main {
+  background-color: #e5e5e5;
+}
+
 .bar-container {
   position: sticky;
   position: -webkit-sticky;

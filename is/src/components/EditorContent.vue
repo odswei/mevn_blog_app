@@ -30,9 +30,7 @@
 //     },
 //   ],
 // };
-
 import { Editor, EditorContent } from "@tiptap/vue-2";
-
 // import Document from "@tiptap/extension-document";
 // import Paragraph from "@tiptap/extension-paragraph";
 // import Text from "@tiptap/extension-text";
@@ -41,7 +39,6 @@ import { Editor, EditorContent } from "@tiptap/vue-2";
 import StarterKit from "@tiptap/starter-kit";
 export default {
   props: ["chapter"],
-
   components: {
     EditorContent,
   },
@@ -50,7 +47,6 @@ export default {
       editor: null,
     };
   },
-
   // computed: {
   //   output() {
   //     return generateHTML(this.hellow, [
@@ -72,7 +68,6 @@ export default {
       editable: false,
     });
   },
-
   beforeDestroy() {
     this.editor.destroy();
   },

@@ -58,12 +58,10 @@ export default {
   data() {
     return {
       series_id: null,
-      id: null,
+      chapter_id: null,
       s_title: null,
       content: null,
       c_title: null,
-      chapter_no: 1,
-      tags: ["mongodb", "mongoose"],
     };
   },
   computed: {
@@ -126,41 +124,40 @@ export default {
       let chapter_content = {
         contents: this.content,
         c_title: this.c_title,
-        chapter_no: 1,
-        tags: ["mongodb", "mongoose"],
         published: true,
       };
-      const token = this.$store.state.user.hw;
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = token;
-        axios
-          .post(`//localhost:3001/chapter/${this.id}`, chapter_content)
-          .then(() => {
-            this.$router.push({
-              name: "Series",
-              params: { id: this.series_id },
-            });
+
+      axios
+        .post(`//localhost:3001/chapter/${this.chapter_id}`, chapter_content)
+        .then(() => {
+          this.$router.push({
+            name: "Series",
+            params: { id: this.series_id },
           });
-      }
+        });
+
       console.log(chapter_content);
     },
   },
   created() {
     axios
-      .get(`//localhost:3001/editor/${this.$route.params.id}`)
+      .get(`//localhost:3001/chapter/${this.$route.params.id}`)
       .then(({ data }) => {
         console.log(data);
-        this.series_id = data.series._id;
-        this.s_title = data.series.s_title;
-        this.content = data.chapter.contents;
-        this.c_title = data.chapter.c_title;
-        this.id = data.chapter._id;
+        this.series_id = data.series_id._id;
+        this.s_title = data.series_id.s_title;
+        this.content = data.contents;
+        this.c_title = data.c_title;
+        this.chapter_id = data._id;
       });
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.about {
+  background-color: white;
+}
 .chapter {
   margin: 0 !important;
   padding: 0 !important;

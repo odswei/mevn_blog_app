@@ -57,17 +57,31 @@ router.post('/series',enc.decrypt,passport.authenticate('jwt',{session:false}),f
 //ini udh keren
 router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}), function(req,res,next){
     const user_id = req.user.id
-    Series.find({uid:user_id},function(err,series){
-        if(err) res.send(err)
+    Series.find({uid:user_id})
+    .populate({
+        path:'uid',
+        select:'username'
+    })
+    .populate({
+        path:'chapters',
+        select:['c_title','tags','chapter_no']
+    }).exec(function(err,series){
+        if(err )res.send(err)
         res.send(series)
     })
+    
 })
 
+//return all series for home vue
 router.get('/series', function(req,res,next){
     Series.find({})
     .populate({
         path:'uid',
         select:'username'
+    })
+    .populate({
+        path:'chapters',
+        select:['c_title','tags','chapter_no']
     })
     .exec(function(err,series){
         if(err) res.send(err)

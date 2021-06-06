@@ -5,9 +5,11 @@ const chapterSchema = new mongoose.Schema({
         c_title: { type: String, required: true },
         contents:{ type: String, required: true },
         update:{ type: Date, default: Date.now },
-        tags:[String],
+        tags:[{
+                tag:String
+        }],
         published:Boolean,
-        series_id: mongoose.Schema.Types.ObjectId
+        series_id: {type: mongoose.Schema.Types.ObjectId,ref:'Series'}
         
 })
 

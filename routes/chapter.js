@@ -112,23 +112,21 @@ router.post('/series/:id/chapter', enc.decrypt,passport.authenticate('jwt', { se
   
 // });
 
-router.get('/series/:seriesId/chapter/:chapterId',(req,res,next)=>{
-    const seriesId = req.params.seriesId
-    const chapterId = req.params.chapterId
+router.get('/chapter/:chapterId',(req,res,next)=>{
 
-    Series.findById(seriesId,function(err,series){
-        if(err)res.send(err)
-        if(series.chapters.includes(chapterId)){
-            Chapter.findById(chapterId,function(err,chapter){
-                if(err) res.send(err)
-                res.send(chapter)
-            })
-        }
+    const chapterId = req.params.chapterId
+    Chapter.findOne({_id:chapterId})
+    .populate('series_id','s_title')
+    .exec(function(err,chapter){
+        if(err) res.send(err)
+        res.send(chapter)
     })
+        
+
 })
 
-router.post('/series/:seriesId/chapter/:chapterId',(req,res,next)=>{
-    const seriesId = req.params.seriesId
+router.post('/chapter/:chapterId',enc.decrypt,passport.authenticate('jwt', { session: false }),(req,res,next)=>{
+    // const seriesId = req.params.seriesId
     const chapterId = req.params.chapterId
 
     const updatedChapter = {
@@ -138,15 +136,15 @@ router.post('/series/:seriesId/chapter/:chapterId',(req,res,next)=>{
         published:req.body.published,
     }
 
-    Series.findById(seriesId,function(err,series){
-        if(err)res.send(err)
-        if(series.chapters.includes(chapterId)){
+    // Series.findById(seriesId,function(err,series){
+    //     if(err)res.send(err)
+        // if(series.chapters.includes(chapterId)){
             Chapter.findOneAndUpdate({_id:chapterId},{$set:updatedChapter},{new:true,useFindAndModify: false},function (err,updatedChapter) {
                 if (err) return console.error(err);       
                 res.send(updatedChapter)  
             })
-        }
-    })
+        // }
+    // })
 
 })
 

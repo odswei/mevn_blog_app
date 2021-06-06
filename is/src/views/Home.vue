@@ -19,7 +19,11 @@
     <profile-photo /> -->
     <!-- <div v-for="(post, index) of series" :key="index">{{ post.s_title }}</div> -->
     <!-- {{ series }} -->
-    <input type="text" v-model="search_query" placeholder="search . ." />
+
+    <span class="input-container">
+      <input type="text" v-model="search_query" placeholder="Search . ." />
+    </span>
+
     <br />
     <card-series :series="resultQuery" />
   </v-container>
@@ -49,13 +53,32 @@ export default {
   computed: {
     resultQuery() {
       if (this.componentLoaded && this.search_query) {
-        const search = this.search_query.toLowerCase();
-        // console.log(typeof search) const search = this.lookfor.toLowerCase()
-        return this.series.filter(
-          (post) =>
-            typeof post.s_title === "string" &&
-            post.s_title.toLowerCase().includes(search)
+        let stringSeriesResult = filterByValue(this.series, this.search_query);
+        let tagResult = this.series.filter((a) =>
+          a.chapters.some((u) =>
+            u.tags.some((t) => t.tag.includes(this.search_query))
+          )
         );
+        let c_titleResult = this.series.filter((d) =>
+          d.chapters.some((c) =>
+            c.c_title
+              .toString()
+              .toLowerCase()
+              .includes(this.search_query.toLowerCase())
+          )
+        );
+        let allPossible = (obj1, obj2) => {
+          let result = Object.values(
+            obj1.concat(obj2).reduce((r, o) => {
+              r[o._id] = o;
+              return r;
+            }, {})
+          );
+          return result;
+        };
+        let twoPossible = allPossible(stringSeriesResult, tagResult);
+        // console.log(c_titleResult);
+        return allPossible(twoPossible, c_titleResult);
       } else {
         return this.series;
       }
@@ -70,6 +93,29 @@ export default {
       );
   },
 };
+
+function filterByValue(array, string) {
+  return array.filter((o) =>
+    Object.keys(o).some(
+      (k) =>
+        typeof o[k] === "string" &&
+        o[k].toLowerCase().includes(string.toLowerCase())
+    )
+  );
+}
 </script>
 
-<style scoped></style>
+<style scoped>
+.input-container {
+  padding: 0px 0px 0px 10px;
+}
+input {
+  border-radius: 30px;
+  background-color: white;
+  padding: 10px 30px 10px 30px;
+  width: 400px;
+}
+input:focus {
+  outline: none;
+}
+</style>
