@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-container>
-<<<<<<< HEAD
       <div @keyup.enter="addSeries">
         <v-text-field
           v-model="series_title"
@@ -42,71 +41,30 @@
         </div>
       </div>
     </v-container>
-=======
-      <v-form class="add-series">
-        <v-row>
-          <v-col cols="12" sm="10" md="8">
-            <v-text-field
-              v-model="series_title"
-              label="Your Series"
-              hint="For example, Fullstack with Laravel and VueJS!"
-              persistent-hint
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-btn
-          @click.prevent="addSeries"
-          class="hello"
-          depressed
-          color="blue accent-4  "
-          rounded
-          small
-          ><span>Add Series</span>
-        </v-btn>
-      </v-form>
-
-      <card-series :series="series"
-    /></v-container>
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
 import axios from "axios";
 import Chapter from "../components/Chapter.vue";
 export default {
   components: {
     Chapter,
   },
-=======
-import CardSeries from "../components/CardSeries.vue";
-import axios from "axios";
-export default {
-  components: { CardSeries },
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
   data() {
     return {
       series_title: null,
       change: false,
       series: null,
-<<<<<<< HEAD
       hover: false,
-=======
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
     };
   },
   watch: {
     change() {
       axios.get(`//localhost:3001/myseries`).then(({ data }) => {
         this.series = data;
-<<<<<<< HEAD
         this.change = false;
       });
-=======
-      });
-      this.change = false;
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
     },
   },
 
@@ -118,7 +76,6 @@ export default {
   },
   methods: {
     addSeries() {
-<<<<<<< HEAD
       if (this.s_title != null) {
         axios
           .post("//localhost:3001/series", { s_title: this.series_title })
@@ -127,20 +84,12 @@ export default {
             this.series_title = null;
           });
       }
-=======
-      axios
-        .post("//localhost:3001/series", { s_title: this.series_title })
-        .then(({ data }) => {
-          (this.change = true), this.$store.dispatch("setSeries", { data });
-        });
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
     },
   },
 };
 </script>
 
 <style scoped>
-<<<<<<< HEAD
 .series-button {
   color: white !important;
 
@@ -158,16 +107,10 @@ export default {
   font-weight: 900;
   padding: 2px 8px;
   border-radius: 30px;
-=======
-.hello {
-  color: white !important;
-  margin: 15px 0px 15px 0px;
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
 }
 .add-series {
   margin: 20px 10px 15px 35px;
 }
-<<<<<<< HEAD
 
 .series {
   font-size: 21px;
@@ -185,6 +128,4 @@ export default {
   font-size: 16px;
   margin: 10px 0px 10px 30px;
 }
-=======
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
 </style>
