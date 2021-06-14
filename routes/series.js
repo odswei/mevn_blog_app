@@ -64,7 +64,7 @@ router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}),
     })
     .populate({
         path:'chapters',
-        select:['c_title','tags','chapter_no']
+        select:['c_title','tags','chapter_no','claps','update','published']
     }).exec(function(err,series){
         if(err )res.send(err)
         res.send(series)

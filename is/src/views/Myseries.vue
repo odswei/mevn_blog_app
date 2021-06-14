@@ -1,51 +1,70 @@
 <template>
   <div>
     <v-container>
-      <v-form class="add-series">
-        <v-row>
-          <v-col cols="12" sm="10" md="8">
-            <v-text-field
-              v-model="series_title"
-              label="Your Series"
-              hint="For example, Fullstack with Laravel and VueJS!"
-              persistent-hint
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-btn
-          @click.prevent="addSeries"
-          class="hello"
-          depressed
-          color="blue accent-4  "
-          rounded
-          small
-          ><span>Add Series</span>
-        </v-btn>
-      </v-form>
+      <div @keyup.enter="addSeries">
+        <v-text-field
+          v-model="series_title"
+          label="Your Series"
+          hint="For example, Fullstack with Laravel and VueJS!"
+          persistent-hint
+        ></v-text-field>
+      </div>
+      <div>
+        <button @click.prevent="addSeries" class="series-button">
+          Add Series
+        </button>
+      </div>
 
-      <card-series :series="series"
-    /></v-container>
+      <div v-for="(s_title, index) in series" :key="index">
+        <div class="series">
+          <span class="series-index">{{ index + 1 }}</span
+          ><span class="series-title">{{ s_title.s_title }}</span>
+        </div>
+
+        <chapter
+          v-for="chapter in s_title.chapters"
+          :key="chapter._id"
+          :chapter="chapter"
+        />
+
+        <div class="add-chapter">
+          <router-link
+            :to="{
+              name: 'Editor',
+              query: {
+                s: s_title.s_title,
+              },
+            }"
+          >
+            <button class="chapter-button">Add Chapter</button></router-link
+          >
+        </div>
+      </div>
+    </v-container>
   </div>
 </template>
 
 <script>
-import CardSeries from "../components/CardSeries.vue";
 import axios from "axios";
+import Chapter from "../components/Chapter.vue";
 export default {
-  components: { CardSeries },
+  components: {
+    Chapter,
+  },
   data() {
     return {
       series_title: null,
       change: false,
       series: null,
+      hover: false,
     };
   },
   watch: {
     change() {
       axios.get(`//localhost:3001/myseries`).then(({ data }) => {
         this.series = data;
+        this.change = false;
       });
-      this.change = false;
     },
   },
 
@@ -57,22 +76,56 @@ export default {
   },
   methods: {
     addSeries() {
-      axios
-        .post("//localhost:3001/series", { s_title: this.series_title })
-        .then(({ data }) => {
-          (this.change = true), this.$store.dispatch("setSeries", { data });
-        });
+      if (this.s_title != null) {
+        axios
+          .post("//localhost:3001/series", { s_title: this.series_title })
+          .then(() => {
+            this.change = true;
+            this.series_title = null;
+          });
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.hello {
+.series-button {
   color: white !important;
-  margin: 15px 0px 15px 0px;
+
+  background-color: #ff7a00;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 2px 15px;
+  border-radius: 20px;
+}
+.chapter-button {
+  color: rgb(255, 255, 255) !important;
+
+  background-color: #006eff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 30px;
 }
 .add-series {
   margin: 20px 10px 15px 35px;
+}
+
+.series {
+  font-size: 21px;
+  margin: 10px 0px 5px 0px;
+}
+
+.series-index {
+  margin-right: 10px;
+}
+
+.series-title {
+}
+
+.add-chapter {
+  font-size: 16px;
+  margin: 10px 0px 10px 30px;
 }
 </style>

@@ -140,16 +140,20 @@ export default {
     },
   },
   created() {
-    axios
-      .get(`//localhost:3001/chapter/${this.$route.params.id}`)
-      .then(({ data }) => {
-        console.log(data);
-        this.series_id = data.series_id._id;
-        this.s_title = data.series_id.s_title;
-        this.content = data.contents;
-        this.c_title = data.c_title;
-        this.chapter_id = data._id;
-      });
+    if (this.$route.params.id) {
+      axios
+        .get(`//localhost:3001/chapter/${this.$route.params.id}`)
+        .then(({ data }) => {
+          console.log(data);
+          this.series_id = data.series_id._id;
+          this.s_title = data.series_id.s_title;
+          this.content = data.contents;
+          this.c_title = data.c_title;
+          this.chapter_id = data._id;
+        });
+    } else {
+      this.s_title = this.$route.query.s;
+    }
   },
 };
 </script>

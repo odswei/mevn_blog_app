@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Editor from "../views/Editor.vue";
+import BlankEditor from "../components/Editor";
 import Chapter from "../views/Chapter.vue";
 import Series from "../views/Series.vue";
 import Myseries from "../views/Myseries.vue";
@@ -19,7 +20,7 @@ const routes = [
     component: Home,
   },
   {
-    path: "/editor/:id",
+    path: "/editor/:id?",
     name: "Editor",
     component: Editor,
     meta: {
@@ -43,6 +44,11 @@ const routes = [
     path: "/series/:id",
     name: "Series",
     component: Series,
+  },
+  {
+    path: "/editor",
+    name: "BlankEditor",
+    component: BlankEditor,
   },
   // {
   //   path: "/about",
