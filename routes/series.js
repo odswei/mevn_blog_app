@@ -74,15 +74,16 @@ router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}),
 
 //return all series for home vue
 router.get('/series', function(req,res,next){
-    Series.find({})
+    Chapter.find({})
     .populate({
+        path:'series_id',
+        select:['s_title','followers','claps'],
+        populate:[{
         path:'uid',
-        select:'username'
+        select:['username'],
+    }]
     })
-    .populate({
-        path:'chapters',
-        select:['c_title','tags','chapter_no']
-    })
+
     .exec(function(err,series){
         if(err) res.send(err)
         res.send(series)

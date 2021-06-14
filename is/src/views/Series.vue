@@ -24,7 +24,8 @@
         >
       </div> -->
     <!-- {{ this.$store.state.series }} -->
-    <main-card :series="series" />
+
+    <main-card :series="series" :cid="this.$route.params.chapter_id" />
     <!-- </div> -->
   </v-container>
 </template>

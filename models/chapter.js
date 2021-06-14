@@ -9,7 +9,8 @@ const chapterSchema = new mongoose.Schema({
                 tag:String
         }],
         published:Boolean,
-        series_id: {type: mongoose.Schema.Types.ObjectId,ref:'Series'}
+        series_id: {type: mongoose.Schema.Types.ObjectId,ref:'Series'},
+        claps:[{type:mongoose.Schema.Types.ObjectId, ref: 'User'}],
         
 })
 

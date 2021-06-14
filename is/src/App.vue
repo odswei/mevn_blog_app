@@ -1,38 +1,51 @@
 <template>
   <v-app id="main">
-    <v-container fluid class="bar-container">
-      <v-app-bar class="nav-bar" elevate="0" flat color="deep-orange accent-4">
+    <div class="navbar">
+      <div class="nav-container">
         <router-link to="/"
-          ><v-icon size="80" class="color">$vuetify.icons.custom </v-icon>
+          ><img src="./assets/logo.svg" class="logo" alt="//nsery." />
         </router-link>
-        <v-spacer></v-spacer>
+
         <!-- <router-link v-if="loggedIn" style="text-decoration: none" to="/editor">
           <v-btn plain class="write-button">
             <v-icon left> mdi-pencil </v-icon>
             Write
           </v-btn></router-link
         > -->
-        <router-link
-          v-if="loggedIn"
-          style="text-decoration: none"
-          to="/myseries"
-        >
-          <v-btn plain class="write-button"> My Series </v-btn></router-link
-        >
-        <router-link
+
+        <!-- <router-link
           v-if="!loggedIn"
           style="text-decoration: none"
           to="/login"
           class="light"
         >
           <v-btn plain class="write-button">Login</v-btn></router-link
-        >
-        <nav-profile v-else />
-      </v-app-bar>
-    </v-container>
+        > -->
 
-    <v-main>
-      <div class="front"><router-view /></div
+        <button
+          v-if="!loggedIn"
+          id="show-modal"
+          @click="showModal = true"
+          class="login-button"
+        >
+          <strong> Log In</strong>
+        </button>
+        <!-- use the modal component, pass in the prop -->
+
+        <nav-profile class="profile" v-if="loggedIn" />
+        <router-link
+          v-if="loggedIn"
+          style="text-decoration: none"
+          to="/myseries"
+          class="login-button"
+        >
+          <v-btn plain class="write-button"> My Series </v-btn></router-link
+        >
+      </div>
+    </div>
+    <v-main
+      ><modal v-if="showModal" @close="showModal = false" />
+      <div class="main"><router-view /></div
     ></v-main>
   </v-app>
 </template>
@@ -40,6 +53,7 @@
 <script>
 // import Navbar from "./components/Navbar.vue";
 import NavProfile from "@/components/NavProfile.vue";
+import Modal from "./views/Modal.vue";
 
 // import AllPosts from "@/components/Post.vue";
 export default {
@@ -47,6 +61,19 @@ export default {
   components: {
     // AllPosts,
     NavProfile,
+    Modal,
+  },
+
+  data() {
+    return {
+      login: true,
+      showModal: false,
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.isOpen = !this.isOpen;
+    },
   },
 
   computed: {
@@ -58,29 +85,48 @@ export default {
 </script>
 
 <style scoped>
-#main {
-  background-color: #e5e5e5;
+.profile {
+  float: right;
+}
+.nav-container {
+  padding: 25px 25px 0px 25px;
+  max-width: 1300px;
+  margin: auto;
+}
+.login-button {
+  color: white;
+  float: right;
+  margin-top: 7px;
 }
 
-.bar-container {
+.logo {
+  height: 30px;
+  width: auto;
+}
+#main {
+  background-color: #ffffff;
+}
+
+.navbar {
+  background-image: url("./assets/vector24.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: sticky;
   position: -webkit-sticky;
   z-index: 1;
-  top: 0; /* required */
-  background-color: #dd2c00;
+  height: 100px;
+  top: 0px; /* required */
 }
-
-.front {
+.main {
   max-width: 1100px;
-  margin-top: 140px;
   margin: auto;
 }
 
-.nav-bar {
+/* .nav-bar {
   max-width: 1300px;
   margin: auto;
   color: rgb(255, 255, 255);
-}
+} */
 
 .write-button li a {
   text-decoration: none;

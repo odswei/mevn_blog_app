@@ -23,10 +23,6 @@
       <v-btn type="submit" block large class="ma-2" color="secondary">
         Register
       </v-btn>
-      <p>
-        Already have an account?
-        <router-link to="/login">Login</router-link>
-      </p>
     </v-container>
   </v-form>
 </template>
@@ -58,10 +54,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-.form {
-  background-color: rgb(255, 255, 255);
-  width: 450px;
-  padding: 40px;
-}
-</style>
+<style scoped></style>

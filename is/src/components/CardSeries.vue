@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-container>
-      <div class="flex-container">
-        <div v-for="post in series" :key="post._id">
-          <div class="card-container">
-            <div v-for="chapter in post.chapters" :key="chapter._id">
-              <!-- <v-card class="mx-auto" max-width="374" outlined>
+      <div class="card-container">
+        <div v-for="chapter in series" :key="chapter._id">
+          <div class="card-container-gap">
+            <!-- <div v-for="sid in chapter.series_id" :key="sid._id"> -->
+            <!-- <v-card class="mx-auto" max-width="374" outlined>
             <div class="card-align">
               <v-card-text>
                 <v-avatar color="primary avatar-margin" size="107">
@@ -46,58 +46,112 @@
               </v-card-text>
             </div>
           </v-card> -->
-              <div class="card">
-                <div>
-                  <img src="./taylor.jpg" alt="dorkas" />
-                  <h4>{{ post.uid.username }}</h4>
-                  <h4>@//nsery</h4>
-                </div>
-                <div>
+            <div class="card">
+              <div>
+                <img src="./taylor.jpg" alt="dorkas" />
+              </div>
+              <div>
+                <span class="save_icon">
+                  <v-icon size="30" class="follower-claps-count"
+                    >$vuetify.icons.save_btn</v-icon
+                  >
+                </span>
+                <div class="row-gap">
                   <h3 v-if="typeof series !== null">
                     <router-link
                       class="series-title"
-                      :to="{ name: 'Series', params: { id: post._id } }"
-                      >{{ post.s_title }}
+                      :to="{
+                        name: 'Series',
+                        params: {
+                          id: chapter.series_id._id,
+                          chapter_id: chapter._id,
+                        },
+                      }"
+                      >{{ chapter.c_title }}
                     </router-link>
                   </h3>
-                  <h4>{{ chapter.c_title }}</h4>
-                  <div><small>May, 2021</small></div>
-                  <span v-for="(tag, index) in chapter.tags" :key="index"
-                    ><span class="tag"
-                      ><v-btn
-                        color="yellow darken-3 white--text"
-                        rounded
-                        x-small
-                        depressed
-                        >{{ tag.tag }}</v-btn
+
+                  <h4 v-if="typeof series !== null">
+                    <router-link
+                      class="series-title"
+                      :to="{
+                        name: 'Series',
+                        params: {
+                          id: chapter.series_id._id,
+                          chapter_id: chapter._id,
+                        },
+                      }"
+                      >{{ chapter.series_id.s_title }}
+                    </router-link>
+                  </h4>
+
+                  <div class="username" v-if="typeof series !== null">
+                    <router-link
+                      class="series-title"
+                      :to="{
+                        name: 'User',
+                        params: {
+                          id: chapter.series_id.uid._id,
+                        },
+                      }"
+                      ><strong> by {{ chapter.series_id.uid.username }}</strong>
+                      @Infinite
+                    </router-link>
+                  </div>
+                  <span
+                    ><span v-for="(tag, index) in chapter.tags" :key="index"
+                      ><span class="tag"
+                        ><v-btn
+                          color="yellow darken-3 white--text"
+                          rounded
+                          x-small
+                          depressed
+                          >{{ tag.tag }}</v-btn
+                        ></span
                       ></span
                     ></span
                   >
-                  <div>
-                    <v-icon size="40" class="icon"
-                      >$vuetify.icons.steps_btn</v-icon
-                    ><span> #7th steps</span>
-                  </div>
-                  <span class="follower-claps">
-                    <v-icon size="30"> $vuetify.icons.follower_btn</v-icon
-                    ><span class="follower-claps-count">{{
-                      post.followers.length
-                    }}</span>
-                  </span>
-                  <span class="follower-claps">
-                    <v-icon size="30" class="follower-claps-count"
-                      >$vuetify.icons.claps_btn</v-icon
-                    >
-                    <span class="follower-claps-count">
-                      {{ post.claps.length }}</span
-                    >
-                  </span>
-                  <span>read later</span>
                 </div>
+                <div>
+                  <v-icon size="40" class="icon"
+                    >$vuetify.icons.steps_btn</v-icon
+                  ><span
+                    ><small># {{ chapter.chapter_no }} step | </small></span
+                  >
+                  <span>
+                    <small>{{
+                      new Date(
+                        parseInt(chapter._id.toString().substring(0, 8), 16) *
+                          1000
+                      )
+                        .toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })
+                        .replace(/ /g, " ")
+                    }}</small>
+                  </span>
+                </div>
+                <span class="claps-followers">
+                  <v-icon size="35"> $vuetify.icons.follower_btn</v-icon
+                  ><span class="follower-claps-count">{{
+                    chapter.series_id.followers.length
+                  }}</span>
+                </span>
+                <span class="claps-followers">
+                  <v-icon size="35" class="follower-claps-count"
+                    >$vuetify.icons.claps_btn</v-icon
+                  >
+                  <span class="follower-claps-count">
+                    {{ chapter.claps.length }}</span
+                  >
+                </span>
               </div>
             </div>
           </div>
         </div>
+        <!-- </div> -->
       </div>
     </v-container>
   </div>
@@ -110,27 +164,35 @@ export default {
 </script>
 
 <style scoped>
-.flex-container {
+.save_icon {
+  float: right;
+}
+.card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-column-start: auto;
   grid-gap: 10px;
 }
-.card-container {
+
+.card-container-gap {
   display: grid;
   grid-gap: 10px;
 }
 
 .card {
   /* width: 320px; */
-  background-color: rgb(255, 255, 255);
+  //background-color: rgb(252, 4, 4);
   border-radius: 6px;
   /* margin: 10px; */
-  grid-auto-rows: 260px;
+  grid-auto-rows: minmax(250px, auto);
   /* border: 1px solid black; */
   display: grid;
 
   grid-template-columns: 0.8fr 2fr;
+}
+
+.username {
+  font-size: 15px;
 }
 .tag {
   margin-right: 10px;
@@ -141,28 +203,32 @@ export default {
   /* width: 320px; */
   /* background-color: rgb(255, 85, 85); */
   /* margin: 10px; */
-  display: grid;
-  justify-items: center;
-  padding: 18px 9px 18px 18px;
-  grid-template-rows: 1.5fr 0.4fr 0.4fr;
+  text-align: center;
+  //background-color: aqua;
 }
 
 .card div:nth-child(2) {
   /* width: 320px; */
   /* background-color: red; */
-  padding: 18px 18px 18px 9px;
-  align-self: center;
+
+  //background-color: bisque;
+}
+
+.row-gap {
+  display: grid;
+  row-gap: 1ch;
 }
 
 .card img {
   object-fit: cover;
-  width: 80%;
+  width: 50%;
   border-radius: 50%;
   align-self: center;
 }
 
 .series-title {
   text-decoration: none;
+  color: #2f2a2a;
 }
 .card-align {
   text-align: center;
@@ -170,7 +236,7 @@ export default {
 .avatar-margin {
   margin-bottom: 8px;
 }
-.follower-claps {
+.claps-followers {
   margin: 10px;
 }
 .follower-claps-count {

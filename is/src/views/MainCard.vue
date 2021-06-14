@@ -39,7 +39,7 @@ import StarterKit from "@tiptap/starter-kit";
 
 export default {
   components: { EditorContent },
-  props: ["series"],
+  props: ["series", "cid"],
   data: () => ({
     contents: null,
     title: null,
@@ -71,7 +71,9 @@ export default {
   },
   watch: {
     series() {
-      this.editor.commands.setContent(this.series.chapters[0].contents);
+      const local = this.series.chapters.filter((c) => c._id === this.cid);
+
+      this.editor.commands.setContent(local[0].contents);
       this.title = this.series.chapters[0].c_title;
     },
     contents() {

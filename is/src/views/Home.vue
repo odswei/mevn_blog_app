@@ -50,35 +50,45 @@ export default {
     };
   },
 
+  // computed: {
+  //   resultQuery() {
+  //     console.log(this.series);
+  //     return this.series;
+  //   },
+  // },
+
   computed: {
     resultQuery() {
+      // console.log(this.componentLoaded, this.series);
       if (this.componentLoaded && this.search_query) {
         let stringSeriesResult = filterByValue(this.series, this.search_query);
-        let tagResult = this.series.filter((a) =>
-          a.chapters.some((u) =>
-            u.tags.some((t) => t.tag.includes(this.search_query))
-          )
-        );
-        let c_titleResult = this.series.filter((d) =>
-          d.chapters.some((c) =>
-            c.c_title
-              .toString()
-              .toLowerCase()
-              .includes(this.search_query.toLowerCase())
-          )
-        );
-        let allPossible = (obj1, obj2) => {
-          let result = Object.values(
-            obj1.concat(obj2).reduce((r, o) => {
-              r[o._id] = o;
-              return r;
-            }, {})
-          );
-          return result;
-        };
-        let twoPossible = allPossible(stringSeriesResult, tagResult);
+        console.log(stringSeriesResult);
+        // let tagResult = this.series.filter((a) =>
+        //   a.chapters.some((u) =>
+        //     u.tags.some((t) => t.tag.includes(this.search_query))
+        //   )
+        // );
+        // let c_titleResult = this.series.filter((d) =>
+        //   d.chapters.some((c) =>
+        //     c.c_title
+        //       .toString()
+        //       .toLowerCase()
+        //       .includes(this.search_query.toLowerCase())
+        //   )
+        // );
+        // let allPossible = (obj1, obj2) => {
+        //   let result = Object.values(
+        //     obj1.concat(obj2).reduce((r, o) => {
+        //       r[o._id] = o;
+        //       return r;
+        //     }, {})
+        //   );
+        //   return result;
+        // };
+        // let twoPossible = allPossible(stringSeriesResult, tagResult);
         // console.log(c_titleResult);
-        return allPossible(twoPossible, c_titleResult);
+        // return allPossible(twoPossible, c_titleResult);
+        return stringSeriesResult;
       } else {
         return this.series;
       }
@@ -86,21 +96,17 @@ export default {
   },
 
   created() {
-    axios
-      .get("//localhost:3001/series")
-      .then(
-        ({ data }) => ((this.componentLoaded = true), (this.series = data))
-      );
+    axios.get("//localhost:3001/series").then(({ data }) => {
+      this.componentLoaded = true;
+      this.series = data;
+    });
   },
 };
 
 function filterByValue(array, string) {
-  return array.filter((o) =>
-    Object.keys(o).some(
-      (k) =>
-        typeof o[k] === "string" &&
-        o[k].toLowerCase().includes(string.toLowerCase())
-    )
+  return array.filter(
+    (data) =>
+      JSON.stringify(data).toLowerCase().indexOf(string.toLowerCase()) !== -1
   );
 }
 </script>

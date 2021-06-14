@@ -26,6 +26,8 @@ import RedoIcon from "@/components/Icons/RedoIcon.vue";
 import FollowerIcon from "@/components/Icons/FollowerIcon.vue";
 import ClapsIcon from "@/components/Icons/ClapsIcon.vue";
 import StepsIcon from "@/components/Icons/StepsIcon.vue";
+import LogoBlackIcon from "@/components/Icons/LogoBlackIcon.vue";
+import SaveIcon from "@/components/Icons/SaveIcon.vue";
 
 Vue.use(Vuetify);
 
@@ -35,6 +37,10 @@ export default new Vuetify({
       custom: {
         // name of our custom icon
         component: CustomIcon, // our custom component
+      },
+      logoBlack_btn: {
+        // name of our logoBlack icon
+        component: LogoBlackIcon, // our custom component
       },
       delete_btn: {
         // name of our custom icon
@@ -135,6 +141,10 @@ export default new Vuetify({
       steps_btn: {
         // name of our custom icon
         component: StepsIcon, // our custom component
+      },
+      save_btn: {
+        // name of our custom icon
+        component: SaveIcon, // our custom component
       },
     },
   },

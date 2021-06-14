@@ -28,6 +28,12 @@ app.use(cors())
 
 app.use(require('./routes'))
 
+app.use((err,req,res,next)=>{
+    if(err.code == "INCORRECT_FILETYPE"){
+        res.status(422).json({error:"only images are allowed"})
+        return
+    }
+})
 
 
 app.listen(3001, ()=>{console.log('listen to port 3001')})
