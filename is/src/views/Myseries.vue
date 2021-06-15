@@ -1,18 +1,21 @@
 <template>
   <div>
     <v-container>
-      <div @keyup.enter="addSeries">
-        <v-text-field
-          v-model="series_title"
-          label="Your Series"
-          hint="For example, Fullstack with Laravel and VueJS!"
-          persistent-hint
-        ></v-text-field>
-      </div>
-      <div>
-        <button @click.prevent="addSeries" class="series-button">
-          Add Series
-        </button>
+      <div @keyup.enter="addSeries" class="add-series">
+        <span>
+          <v-text-field
+            v-model="series_title"
+            label="Your Series"
+            hint="For example, Fullstack with Laravel and VueJS!"
+            persistent-hint
+            class="text-input"
+          ></v-text-field>
+        </span>
+        <span>
+          <button @click.prevent="addSeries" class="series-button">
+            Add Series
+          </button>
+        </span>
       </div>
 
       <div v-for="(s_title, index) in series" :key="index">
@@ -92,7 +95,7 @@ export default {
 <style scoped>
 .series-button {
   color: white !important;
-
+  margin-top: 20px;
   background-color: #ff7a00;
   font-size: 15px;
   font-weight: bold;
@@ -101,15 +104,19 @@ export default {
 }
 .chapter-button {
   color: rgb(255, 255, 255) !important;
-
   background-color: #006eff;
   font-size: 10px;
   font-weight: 900;
   padding: 2px 8px;
   border-radius: 30px;
 }
+
+.text-input {
+  max-width: 800px;
+}
+
 .add-series {
-  margin: 20px 10px 15px 35px;
+  margin: 20px 0px 15px 0px;
 }
 
 .series {

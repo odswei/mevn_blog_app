@@ -8,7 +8,7 @@ const enc = require('../helpers/encrypt')
 const { post } = require('./chapter')
 
 //ini udh bnr
-router.post('/series',enc.decrypt,passport.authenticate('jwt',{session:false}),function(req, res, next){
+router.post('/series',passport.authenticate('jwt',{session:false}),function(req, res, next){
     const user_id = req.user.id
 
     const newSeries = new Series({
@@ -55,7 +55,7 @@ router.post('/series',enc.decrypt,passport.authenticate('jwt',{session:false}),f
 // })
 
 //ini udh keren
-router.get('/myseries',enc.decrypt,passport.authenticate('jwt',{session:false}), function(req,res,next){
+router.get('/myseries',passport.authenticate('jwt',{session:false}), function(req,res,next){
     const user_id = req.user.id
     Series.find({uid:user_id})
     .populate({

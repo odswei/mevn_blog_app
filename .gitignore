@@ -1,7 +1,4 @@
 node_modules/
-<<<<<<< HEAD
 is/node_modules/
-=======
->>>>>>> e75a53533aa3fd889d772bf410c5914c7435fabf
 .env
 id_rsa_priv.pem

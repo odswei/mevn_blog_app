@@ -20,12 +20,12 @@ new Vue({
       (response) => response,
       (error) => {
         if (error.response.status === 401) {
-          this.$store.dispatch("logout");
+          // this.$store.dispatch("logout");
         }
         return Promise.reject(error);
       }
     );
-    axios.defaults.headers.common["Authorization"] = chimney;
+    axios.defaults.headers.common["Authorization"] = JSON.parse(chimney);
   },
   vuetify,
   render: (h) => h(App),

@@ -6,23 +6,23 @@
         <div v-for="chapter in series.chapters" :key="chapter._id">
           <div class="step-container">
             <span class="dot">
-              <span class="c-no c-vertical">{{ chapter.chapter_no }}</span>
+              <span>{{ chapter.chapter_no }}</span>
             </span>
 
-            <span class="c-title c-vertical">
+            <span class="c-title">
               <button @click="viewContent(chapter._id)">
                 {{ chapter.c_title }}
               </button>
-              <router-link
+              <!-- <router-link
                 v-if="loggedIn"
                 style="text-decoration: none"
                 :to="{ name: 'Editor', params: { id: chapter._id } }"
               >
                 <v-btn plain class="write-button"> Edit </v-btn></router-link
-              >
+              > -->
             </span>
           </div>
-          <div class="vl"></div>
+          <!-- <div class="vl"></div> -->
         </div>
       </div>
       <div>
@@ -102,10 +102,10 @@ export default {
 }
 .dot {
   height: 26px;
-  width: 26px;
+  width: 3px;
+  margin-right: 20px;
   text-align: center;
   background-color: #bbb;
-  border-radius: 50%;
   display: inline-block;
 }
 .vl {

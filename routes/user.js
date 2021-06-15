@@ -30,11 +30,11 @@ const multer = require('multer')
             
             if (isValid) {
 
-                const tokenObject =util.issueJWT(user);
-                const t=JSON.stringify( tokenObject)
+                const hw =util.issueJWT(user);
+                // const t=JSON.stringify( tokenObject)
 
 
-                var hw = enc.encrypt(t)
+                // var hw = enc.encrypt(t)
 
                 res.status(200).json({ success: true,hw});
 
@@ -81,7 +81,7 @@ router.post('/register', function(req, res, next){
 });
 
 
-router.get('/',enc.decrypt,passport.authenticate('jwt',{session:false}),(req,res,next)=>{
+router.get('/',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
 
     res.json(req.user)
 })
@@ -99,7 +99,7 @@ router.get('/',enc.decrypt,passport.authenticate('jwt',{session:false}),(req,res
 //     })
 // })
 
-router.post('/upp',enc.decrypt,passport.authenticate('jwt',{session:false}),function(req,res,next){
+router.post('/upp',passport.authenticate('jwt',{session:false}),function(req,res,next){
     const uid = req.user._id
     const image = fs.readFileSync(path.resolve(__dirname, "taylor.jpg"), {encoding:'base64'})
     const obj = new Image ({
@@ -133,7 +133,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5000000 },
+    limits: { fileSize: 3000000 },
     fileFilter(req, file, cb) {
       if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) { //allowed file extensions
         return cb(new Error("please upload png,jpeg or jpg"));
@@ -142,25 +142,25 @@ const upload = multer({
     }
   });
 
-router.post('/upload', enc.decrypt,passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
+router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
          const uid =   req.user.id
 
          var newImg ={
-             img:{
+        
             data:fs.readFileSync(req.file.path),
             contentType:req.file.mimetype
-             }            
+                    
                  
          };
          console.log("file",req.file)
 
-         Image.findOneAndUpdate({uid:uid},{$set:newImg},{new:true,useFindAndModify: false},function(err,item){
+         Image.findOneAndUpdate({uid:uid},{img:newImg},{upsert:true, new:true, useFindAndModify: false, setDefaultOnInsert:true},function(err,item){
              if(err)return(err)
             //  console.log("hey",item)
-           res.send(item);
+           res.json({ success: true});
          })
 
-         
+  
       
       
 })

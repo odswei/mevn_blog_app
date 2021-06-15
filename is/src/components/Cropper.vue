@@ -1,13 +1,19 @@
 <template>
   <div>
-    <v-file-input
-      :rules="rules"
-      accept="image/png, image/jpeg, image/bmp"
-      placeholder="Pick an avatar"
-      prepend-icon="mdi-camera"
-      label="Avatar"
-      @change="onSelected"
-    ></v-file-input>
+    <div class="img-input-container">
+      <div>
+        <v-file-input
+          :rules="rules"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Pick an avatar"
+          prepend-icon="mdi-camera"
+          label="Avatar"
+          class="img-input"
+          @change="onSelected"
+        ></v-file-input>
+      </div>
+      <div><button class="button-img-save" @click="onSubmit">Save</button></div>
+    </div>
     <cropper
       class="cropper"
       :src="image"
@@ -28,14 +34,13 @@
       image-restriction="stencil"
     />
     <img :src="preview" alt="image" />
-    <!-- {{ img }} -->
   </div>
 </template>
 
 <script>
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
-
+import axios from "axios";
 export default {
   components: {
     Cropper,
@@ -50,6 +55,7 @@ export default {
       ],
       image: null,
       preview: null,
+      file: null,
     };
   },
   // computed: {
@@ -69,8 +75,8 @@ export default {
       this.preview = canvas.toDataURL();
     },
     onSelected(e) {
-      const files = e;
-      if (files != undefined) {
+      this.file = e;
+      if (this.file != undefined && this.file.size < 300000) {
         let reader = new FileReader();
 
         const that = this;
@@ -78,9 +84,24 @@ export default {
           that.image = reader.result;
         };
 
-        reader.readAsDataURL(files);
+        reader.readAsDataURL(this.file);
       } else {
         this.image = null;
+      }
+    },
+    onSubmit() {
+      const formData = new FormData();
+      console.log(this.file);
+      formData.append("file", this.file);
+      // console.log(formData);
+      try {
+        axios.post("//localhost:3001/upload", formData).then((res) => {
+          console.log(res);
+        });
+        this.message = "uploaded!";
+      } catch (err) {
+        console.log(err);
+        this.message = "something went wrong!";
       }
     },
   },
@@ -107,5 +128,18 @@ img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+}
+
+.img-input {
+  width: 300px;
+}
+.button-img-save {
+  background-color: #5c5c5c;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+.img-input-container {
+  display: flex;
 }
 </style>

@@ -7,14 +7,14 @@
     <span class="chapter-index">{{ chapter.chapter_no }}</span
     ><span class="chapter-title"> {{ chapter.c_title }}</span>
     <span class="published" v-if="chapter.published == true">Published</span>
-    <div v-if="hover">
+    <span v-if="hover">
       <button class="live">Live</button>
       <router-link :to="{ name: 'Editor', params: { id: chapter._id } }"
         ><button class="edit">Edit</button></router-link
       >
       <button class="private">Private</button>
       <button class="delete">Delete</button>
-    </div>
+    </span>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ export default {
   border-radius: 10px;
   color: white;
   font-size: 10px;
-  margin-right: 6px;
+  margin-left: 6px;
   font-weight: bold;
 }
 .delete {

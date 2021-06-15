@@ -8,6 +8,7 @@ import Editor from "../views/Editor.vue";
 import Chapter from "../views/Chapter.vue";
 import Series from "../views/Series.vue";
 import Myseries from "../views/Myseries.vue";
+import Setting from "../views/Setting.vue";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,15 @@ const routes = [
     component: Register,
   },
   {
+    path: "/setting",
+    name: "Setting",
+    component: Setting,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
+  {
     path: "/login",
     name: "Login",
     component: Login,
@@ -63,6 +73,9 @@ const routes = [
     path: "/myseries",
     name: "Myseries",
     component: Myseries,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 

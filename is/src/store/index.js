@@ -11,11 +11,11 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_USER_DATA(state, userData) {
-      state.user = userData;
-      localStorage.setItem("xhtrvbq", userData.hw);
+      state.user = userData.hw.token;
+      localStorage.setItem("xhtrvbq", JSON.stringify(userData.hw.token));
     },
     SET_HW(state, hw) {
-      state.user = { hw: hw };
+      state.user = hw;
     },
     CLEAR_USER_DATA() {
       localStorage.removeItem("xhtrvbq");

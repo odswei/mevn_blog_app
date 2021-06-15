@@ -23,7 +23,7 @@ router.get('/series/:id/chapters', function(req, res, next)
 
 
 //area terlarang udah works well!
-router.post('/series/:id/chapter', enc.decrypt,passport.authenticate('jwt', { session: false }), function(req, res, next)
+router.post('/series/:id/chapter', passport.authenticate('jwt', { session: false }), function(req, res, next)
 {
     const series_id = req.params.id
 
@@ -125,7 +125,7 @@ router.get('/chapter/:chapterId',(req,res,next)=>{
 
 })
 
-router.post('/chapter/:chapterId',enc.decrypt,passport.authenticate('jwt', { session: false }),(req,res,next)=>{
+router.post('/chapter/:chapterId',passport.authenticate('jwt', { session: false }),(req,res,next)=>{
     // const seriesId = req.params.seriesId
     const chapterId = req.params.chapterId
 
