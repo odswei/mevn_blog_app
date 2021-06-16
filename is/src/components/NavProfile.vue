@@ -7,22 +7,18 @@
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-avatar v-bind="attrs" v-on="on" color="red" size="50">
-          <span class="white--text headline"
-            >{{ JSON.stringify(info).charAt(1).toUpperCase() }}
-          </span></v-avatar
-        >
+        <v-avatar v-bind="attrs" v-on="on" size="50">
+          <img v-bind:src="'data:image/jpeg;base64,' + imageBytes" />
+        </v-avatar>
       </template>
 
       <v-card>
         <v-list>
           <v-list-item>
             <v-list-item-avatar>
-              <v-avatar color="red" size="36">
-                <span class="white--text headline"
-                  >{{ JSON.stringify(info).charAt(1).toUpperCase() }}
-                </span></v-avatar
-              >
+              <v-avatar size="36">
+                <img v-bind:src="'data:image/jpeg;base64,' + imageBytes"
+              /></v-avatar>
             </v-list-item-avatar>
 
             <v-list-item-content>
@@ -80,6 +76,7 @@ export default {
       menu: false,
       message: false,
       hints: true,
+      imageBytes: null,
     };
   },
   mounted() {
@@ -101,6 +98,28 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
+    imgC() {
+      return this.$store.state.imgChange;
+    },
+  },
+  watch: {
+    imgC() {
+      axios.get("//localhost:3001/image").then(({ data }) => {
+        this.imageBytes = data;
+        this.$store.state.imgChange = false;
+      });
+    },
+  },
+  created() {
+    axios.get("//localhost:3001/image").then(({ data }) => {
+      this.imageBytes = data;
+    });
   },
 };
 </script>
+
+<style scoped>
+img {
+  object-fit: fill;
+}
+</style>

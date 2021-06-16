@@ -8,11 +8,12 @@ export default new Vuex.Store({
   state: {
     user: null,
     series: null,
+    imgChange: false,
   },
   mutations: {
     SET_USER_DATA(state, userData) {
       state.user = userData.hw.token;
-      localStorage.setItem("xhtrvbq", JSON.stringify(userData.hw.token));
+      localStorage.setItem("xhtrvbq", userData.hw.token);
     },
     SET_HW(state, hw) {
       state.user = hw;

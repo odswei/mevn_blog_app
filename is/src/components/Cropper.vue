@@ -91,14 +91,16 @@ export default {
     },
     onSubmit() {
       const formData = new FormData();
-      console.log(this.file);
+      // console.log(this.file);
       formData.append("file", this.file);
       // console.log(formData);
       try {
         axios.post("//localhost:3001/upload", formData).then((res) => {
           console.log(res);
+          this.message = "uploaded!";
+          this.$store.state.imgChange = true;
+          console.log(this.$store.state.imgChange);
         });
-        this.message = "uploaded!";
       } catch (err) {
         console.log(err);
         this.message = "something went wrong!";

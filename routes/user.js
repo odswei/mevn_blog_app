@@ -35,7 +35,7 @@ const multer = require('multer')
 
 
                 // var hw = enc.encrypt(t)
-
+             
                 res.status(200).json({ success: true,hw});
 
             } else {
@@ -133,9 +133,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 3000000 },
+    // limits: { fileSize: 3000000 },
     fileFilter(req, file, cb) {
-      if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) { //allowed file extensions
+        console.log(file)
+      if (!file.originalname.match(/\.(jpg|jpeg|png|PNG)$/)) { //allowed file extensions
         return cb(new Error("please upload png,jpeg or jpg"));
       }
       cb(undefined, true);
@@ -145,36 +146,31 @@ const upload = multer({
 router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
          const uid =   req.user.id
 
-         var newImg ={
-        
+         var nimg ={
             data:fs.readFileSync(req.file.path),
-            contentType:req.file.mimetype
-                    
-                 
+            contentType:req.file.mimetype     
          };
+
+         console.log(nimg)
          console.log("file",req.file)
 
-         Image.findOneAndUpdate({uid:uid},{img:newImg},{upsert:true, new:true, useFindAndModify: false, setDefaultOnInsert:true},function(err,item){
+         Image.findOneAndUpdate({uid:uid},{img:nimg},{upsert:true, new:true, useFindAndModify: false, setDefaultOnInsert:true},function(err,item){
              if(err)return(err)
             //  console.log("hey",item)
            res.json({ success: true});
          })
-
-  
-      
-      
+     
 })
 
 
 
-router.get('/image',  enc.decrypt,passport.authenticate('jwt',{session:false}), (req, res) => {
+router.get('/image',  passport.authenticate('jwt',{session:false}), (req, res) => {
     Image.findOne({uid:req.user.id}, (err, items) => {
         if (err)res.send(err)
         res.contentType('json')
         console.log(items)
         var base64String =(Buffer.from(items.img.data).toString('base64'))
         res.send(base64String);
-        
 
     })
 });
