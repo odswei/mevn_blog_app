@@ -11,6 +11,7 @@ new Vue({
   router,
   store,
   created() {
+    console.log("dipanggil");
     const chimney = localStorage.getItem("xhtrvbq");
 
     if (chimney) {

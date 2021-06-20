@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-avatar v-bind="attrs" v-on="on" size="50">
-          <img v-bind:src="'data:image/jpeg;base64,' + imageBytes" />
+          <img v-bind:src="image" />
         </v-avatar>
       </template>
 
@@ -16,9 +16,7 @@
         <v-list>
           <v-list-item>
             <v-list-item-avatar>
-              <v-avatar size="36">
-                <img v-bind:src="'data:image/jpeg;base64,' + imageBytes"
-              /></v-avatar>
+              <v-avatar size="36"> <img v-bind:src="image" /></v-avatar>
             </v-list-item-avatar>
 
             <v-list-item-content>
@@ -101,19 +99,19 @@ export default {
     imgC() {
       return this.$store.state.imgChange;
     },
+    image() {
+      return this.$store.getters.getImage;
+    },
   },
   watch: {
     imgC() {
-      axios.get("//localhost:3001/image").then(({ data }) => {
-        this.imageBytes = data;
-        this.$store.state.imgChange = false;
-      });
+      this.$store
+        .dispatch("getImage")
+        .then(() => this.$store.dispatch("getImage"));
     },
   },
   created() {
-    axios.get("//localhost:3001/image").then(({ data }) => {
-      this.imageBytes = data;
-    });
+    this.$store.dispatch("getImage");
   },
 };
 </script>

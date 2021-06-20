@@ -28,6 +28,7 @@ import ClapsIcon from "@/components/Icons/ClapsIcon.vue";
 import StepsIcon from "@/components/Icons/StepsIcon.vue";
 import LogoBlackIcon from "@/components/Icons/LogoBlackIcon.vue";
 import SaveIcon from "@/components/Icons/SaveIcon.vue";
+import UImageIcon from "@/components/Icons/UImageIcon.vue";
 
 Vue.use(Vuetify);
 
@@ -145,6 +146,10 @@ export default new Vuetify({
       save_btn: {
         // name of our custom icon
         component: SaveIcon, // our custom component
+      },
+      img_icon: {
+        // name of our custom icon
+        component: UImageIcon, // our custom component
       },
     },
   },

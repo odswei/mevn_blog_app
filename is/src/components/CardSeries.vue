@@ -47,8 +47,12 @@
             </div>
           </v-card> -->
             <div class="card">
-              <div>
-                <img src="./taylor.jpg" alt="dorkas" />
+              <div v-if="chapter.series_id.uid.u_img">
+                <img class="u_img" v-bind:src="chapter.series_id.uid.u_img" />
+              </div>
+
+              <div v-else>
+                <v-icon size="34" class="u_img">$vuetify.icons.img_icon</v-icon>
               </div>
               <div>
                 <span class="save_icon">
@@ -164,6 +168,18 @@ export default {
 </script>
 
 <style scoped>
+.u_img {
+  width: 40px;
+  height: 40px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .save_icon {
   float: right;
 }
@@ -217,13 +233,6 @@ export default {
 .row-gap {
   display: grid;
   row-gap: 1ch;
-}
-
-.card img {
-  object-fit: cover;
-  width: 50%;
-  border-radius: 50%;
-  align-self: center;
 }
 
 .series-title {

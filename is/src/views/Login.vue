@@ -50,7 +50,8 @@ export default {
           password: this.user.password,
         })
         .then(() => {
-          this.$router.push({ name: "Home" });
+          const path = `/`;
+          if (this.$route.path !== path) this.$router.push(path);
         });
     },
   },

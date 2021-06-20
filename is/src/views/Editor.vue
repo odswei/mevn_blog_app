@@ -18,14 +18,14 @@
     <editor v-model="content" placeholder="hello" />
 
     <v-btn
-      v-if="content"
+      v-if="chapter_id"
       class="btn"
       @click="chapterEdit"
       color="blue accent-4"
       depressed
       rounded
-      >Edit</v-btn
-    >
+      >Edit
+    </v-btn>
 
     <v-btn
       v-else
@@ -57,7 +57,7 @@ export default {
   },
   data() {
     return {
-      series_id: null,
+      sid: null,
       chapter_id: null,
       s_title: null,
       content: null,
@@ -96,27 +96,20 @@ export default {
     //   }
     // },
     chapterPublishing() {
-      const hello = this.hellow;
-
       let chapter_content = {
-        contents: hello,
+        contents: this.content,
         c_title: this.c_title,
-        chapter_no: 1,
-        tags: ["mongodb", "mongoose"],
+        tags: [{ tag: "mongodb" }, { tag: "mongoose" }],
         published: true,
+        sid: this.sid,
       };
-      const token = this.$store.state.user.hw;
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = token;
-        axios
-          .post(
-            "//localhost:3001/series/60b5c1307c56d8260cf6301a",
-            chapter_content
-          )
-          .then(() => {
-            this.$router.push({ name: "Home" });
-          });
-      }
+      console.log(chapter_content);
+
+      axios
+        .post(`//localhost:3001/chapter/${this.chapter_id}`, chapter_content)
+        .then(() => {
+          this.$router.push({ name: "Myseries" });
+        });
     },
     chapterEdit() {
       // const hello = this.hellow;
@@ -131,8 +124,7 @@ export default {
         .post(`//localhost:3001/chapter/${this.chapter_id}`, chapter_content)
         .then(() => {
           this.$router.push({
-            name: "Series",
-            params: { id: this.series_id },
+            name: "Myseries",
           });
         });
 
@@ -153,6 +145,8 @@ export default {
         });
     } else {
       this.s_title = this.$route.query.s;
+      this.sid = this.$route.query.sid;
+      console.log(this.sid);
     }
   },
 };

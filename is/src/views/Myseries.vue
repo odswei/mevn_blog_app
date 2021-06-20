@@ -8,8 +8,13 @@
             label="Your Series"
             hint="For example, Fullstack with Laravel and VueJS!"
             persistent-hint
+            @focus="titleError = null"
             class="text-input"
+            autocomplete="false"
           ></v-text-field>
+          <div class="series-title-error">
+            <small>{{ titleError }}</small>
+          </div>
         </span>
         <span>
           <button @click.prevent="addSeries" class="series-button">
@@ -18,74 +23,80 @@
         </span>
       </div>
 
-      <div v-for="(s_title, index) in series" :key="index">
-        <div class="series">
-          <span class="series-index">{{ index + 1 }}</span
-          ><span class="series-title">{{ s_title.s_title }}</span>
-        </div>
-
-        <chapter
-          v-for="chapter in s_title.chapters"
-          :key="chapter._id"
-          :chapter="chapter"
-        />
-
-        <div class="add-chapter">
-          <router-link
-            :to="{
-              name: 'Editor',
-              query: {
-                s: s_title.s_title,
-              },
-            }"
-          >
-            <button class="chapter-button">Add Chapter</button></router-link
-          >
-        </div>
+      <div>
+        <series
+          v-for="(series, index) in series"
+          :key="index"
+          :series="series"
+          :index="index"
+        >
+          <div class="add-chapter">
+            <router-link
+              :to="{
+                name: 'Editor',
+                query: {
+                  s: series.s_title,
+                  sid: series._id,
+                },
+              }"
+            >
+              <button class="chapter-button">Add Chapter</button></router-link
+            >
+          </div>
+        </series>
       </div>
     </v-container>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import Chapter from "../components/Chapter.vue";
+import Series from "../components/Series.vue";
+
 export default {
   components: {
-    Chapter,
+    Series,
   },
+
   data() {
     return {
       series_title: null,
-      change: false,
-      series: null,
       hover: false,
+      titleError: null,
     };
+  },
+  computed: {
+    change() {
+      return this.$store.getters.getSignal;
+    },
+    series() {
+      return this.$store.getters.getSeries;
+    },
   },
   watch: {
     change() {
-      axios.get(`//localhost:3001/myseries`).then(({ data }) => {
-        this.series = data;
-        this.change = false;
+      this.$store.dispatch("getSeries").then(() => {
+        this.$store.dispatch("setSignal", false);
       });
     },
   },
 
   created() {
     // axios.defaults.headers.common["Authorization"] = this.$store.state.user;
-    axios.get(`//localhost:3001/myseries`).then(({ data }) => {
-      this.series = data;
-    });
+    // axios.get(`//localhost:3001/myseries`).then(({ data }) => {
+    //   this.series = data;
+    // });
+    this.$store.dispatch("getSeries");
   },
   methods: {
     addSeries() {
-      if (this.s_title != null) {
-        axios
-          .post("//localhost:3001/series", { s_title: this.series_title })
+      if (this.series_title) {
+        this.$store
+          .dispatch("setSeriesTitle", { s_title: this.series_title })
           .then(() => {
-            this.change = true;
             this.series_title = null;
           });
+      } else {
+        this.titleError = "Its still empty";
       }
     },
   },
@@ -93,9 +104,12 @@ export default {
 </script>
 
 <style scoped>
+.series-title-error {
+  color: red;
+}
 .series-button {
   color: white !important;
-  margin-top: 20px;
+  margin-top: 5px;
   background-color: #ff7a00;
   font-size: 15px;
   font-weight: bold;

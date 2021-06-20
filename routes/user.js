@@ -36,11 +36,11 @@ const multer = require('multer')
 
                 // var hw = enc.encrypt(t)
              
-                res.status(200).json({ success: true,hw});
+                res.send({ success: true,hw});
 
             } else {
 
-                res.status(401).json({ success: false, msg: "you entered the wrong password" });
+                res.send({ success: false, msg: "you entered the wrong password" });
 
             }
 
@@ -69,12 +69,12 @@ router.post('/register', function(req, res, next){
     
         newUser.save()
             .then((user) => {
-                res.json({ success: true});
+                res.send({ success: true});
             });
 
     } catch (err) {
         
-        res.json({ success: false, msg: err });
+        res.send({ success: false, msg: err });
     
     }
 
@@ -164,14 +164,17 @@ router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single
 
 
 
-router.get('/image',  passport.authenticate('jwt',{session:false}), (req, res) => {
-    Image.findOne({uid:req.user.id}, (err, items) => {
-        if (err)res.send(err)
+router.get('/image',  passport.authenticate('jwt',{session:false}),(req, res) => {
+     Image.findOne({uid:req.user.id}, (err, items) => {
+        if (!items) 
+        {res.send({img:"no image"})}else{
         res.contentType('json')
         console.log(items)
-        var base64String =(Buffer.from(items.img.data).toString('base64'))
-        res.send(base64String);
-
+        base64String = Buffer.from(items.img.data).toString('base64')
+        res.send({id:items._id,
+            data:base64String,contentType:items.img.contentType});
+        }
+ 
     })
 });
 

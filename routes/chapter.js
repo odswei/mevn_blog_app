@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const router = require('express').Router()
 const Chapter = mongoose.model('Chapter')
 const Series = mongoose.model('Series')
+const Image = mongoose.model('Image')
 const User = mongoose.model('User')
 const passport = require('passport')
 const util = require('../helpers/util')
@@ -23,44 +24,73 @@ router.get('/series/:id/chapters', function(req, res, next)
 
 
 //area terlarang udah works well!
-router.post('/series/:id/chapter', passport.authenticate('jwt', { session: false }), function(req, res, next)
+router.post('/chapter/:id*?', passport.authenticate('jwt', { session: false }), async function(req, res, next)
 {
-    const series_id = req.params.id
-
-    Series.findById(series_id,function(err,series)
-        {
-            if(err)res.send(err)
-            if(req.user.id===series.uid.toString())
-                {
-                        const count_chapter= series.chapters.length+1
+    // const series_id = req.params.id
+    console.log(req.user.id)
+    // const {_id} = await Image.findOne({uid:req.user.id})
+    // console.log(_id)
+     const chapterId = req.params.chapterId
+    
+    const chapter = {
+        c_title : req.body.c_title,
+        tags : req.body.tags,
+        contents : req.body.contents,
+        published :req.body.published,
+        series_id:req.body.sid
+    }
+if(chapterId){
+    Chapter.findOneAndUpdate({_id:chapterId},{$set:chapter},{new:true,useFindAndModify: false},function (err,updatedChapter) {
+        if (err) return console.error(err);       
+        res.send({message:"edit success"})  
+    })
+}else{
+   
                 
-                        const newChapter =new Chapter({
-                            c_title : req.body.c_title,
-                            tags : req.body.tags,
-                            contents : req.body.contents,
-                            published :req.body.published,
-                            chapter_no:count_chapter,
-                            series_id:series_id
-                        })
-                        
-                        newChapter.save(function(err,chapter){
-                            if(err)res.send(err)
-                            Series.findById(series_id,function(err,series){
-                                if(err) res.send(err)
-                                series.chapters.push(chapter)
-                                series.save(function(err){
-                                    if(err)res.send(err)
-                                    res.send({status:"adding chapter successed!"})
-                                })
-                            })
-                        })
+    // const newChapter =new Chapter({
+    //     c_title : req.body.c_title,
+    //     tags : req.body.tags,
+    //     contents : req.body.contents,
+    //     published :req.body.published,
+    //     chapter_no:count_chapter,
+    //     series_id:series_id
+    // })
+    const series_id = req.body.sid
+    const {chapters} = await Series.findById({_id:series_id})
+    console.log(chapters.length)
 
-                }
-            else
-                {
-                    res.send({message:'you are not allowed to edit'})
-                }
+    let c = new Chapter(chapter)
+  
+   c.chapter_no=chapters.length+1
+   console.log(c)
+   console.log("connection",mongoose.connection.readyState)
+    await c.save(async function(err,c){
+        console.log(err)
+        if(err)return err
+        console.log(c)
+        await Series.findById(series_id, function(err,series){
+            if(err) res.send(err)
+            series.chapters.push(c)
+            series.save(function(err){
+                if(err) res.send(err)
+                res.send({message:"added!"})
+            })
         })
+    })
+}
+    // Series.findById(series_id,function(err,series)
+    //     {
+    //         if(err)res.send(err)
+    //         if(req.user.id===series.uid.toString())
+    //             {
+         
+
+        //         }
+        //     else
+        //         {
+        //             res.send({message:'you are not allowed to edit'})
+        //         }
+        // })
 })
 
 // const newChapter = new Chapter({
@@ -125,28 +155,28 @@ router.get('/chapter/:chapterId',(req,res,next)=>{
 
 })
 
-router.post('/chapter/:chapterId',passport.authenticate('jwt', { session: false }),(req,res,next)=>{
-    // const seriesId = req.params.seriesId
-    const chapterId = req.params.chapterId
+// router.post('/chapter/:chapterId',passport.authenticate('jwt', { session: false }),(req,res,next)=>{
+//     // const seriesId = req.params.seriesId
+//     const chapterId = req.params.chapterId
 
-    const updatedChapter = {
-        c_title:req.body.c_title,
-        contents:req.body.contents,
-        tags:req.body.tags,
-        published:req.body.published,
-    }
+//     const updatedChapter = {
+//         c_title:req.body.c_title,
+//         contents:req.body.contents,
+//         tags:req.body.tags,
+//         published:req.body.published,
+//     }
 
-    // Series.findById(seriesId,function(err,series){
-    //     if(err)res.send(err)
-        // if(series.chapters.includes(chapterId)){
-            Chapter.findOneAndUpdate({_id:chapterId},{$set:updatedChapter},{new:true,useFindAndModify: false},function (err,updatedChapter) {
-                if (err) return console.error(err);       
-                res.send(updatedChapter)  
-            })
-        // }
-    // })
+    // // Series.findById(seriesId,function(err,series){
+    // //     if(err)res.send(err)
+    //     // if(series.chapters.includes(chapterId)){
+    //         Chapter.findOneAndUpdate({_id:chapterId},{$set:updatedChapter},{new:true,useFindAndModify: false},function (err,updatedChapter) {
+    //             if (err) return console.error(err);       
+    //             res.send(updatedChapter)  
+    //         })
+    //     // }
+    // // })
 
-})
+// })
 
 // router.get('/editor/:id',(req,res,next)=>{
 //     const _id = req.params.id
