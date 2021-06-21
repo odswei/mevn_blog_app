@@ -36,10 +36,10 @@ app.use((err,req,res,next)=>{
 })
 
 if(process.env.NODE_ENV==='production'){
-    app.use(express.static('public'))
+    app.use(express.static(__dirname+'/public/'))
 
     app.get(/.*/,(req,res)=>{
-        res.sendFile('public/index.html')
+        res.sendFile(__dirname+'/public/index.html')
     })
 }
 
