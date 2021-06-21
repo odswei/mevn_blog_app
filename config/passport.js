@@ -1,7 +1,7 @@
 const JWTStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 const User = require('mongoose').model('User')
 
 // const pathToKey = path.join(__dirname,'..','id_rsa_pub.pem')

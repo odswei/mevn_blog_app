@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const passport = require('passport')
-
+const path =require('path')
 
 // require('dotenv').config()
 
@@ -36,10 +36,10 @@ app.use((err,req,res,next)=>{
 })
 
 if(process.env.NODE_ENV==='production'){
-    app.use(express.static(__dirname+'/public/'))
+    app.use((express.static(__dirname + '/public')))
 
     app.get(/.*/,(req,res)=>{
-        res.sendFile(__dirname+'/public/index.html')
+        res.sendFile(__dirname + '/public/index.html')
     })
 }
 

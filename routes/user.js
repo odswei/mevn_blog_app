@@ -81,10 +81,10 @@ router.post('/register', function(req, res, next){
 });
 
 
-router.get('/',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
+// router.get('/',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
 
-    res.json(req.user)
-})
+//     res.json(req.user)
+// })
 
 // router.get('/user/:id',(req,res,next)=>{
 //     User.findById(req.params.id).then((response)=>{
