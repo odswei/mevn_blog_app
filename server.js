@@ -3,7 +3,7 @@ const cors = require('cors')
 const passport = require('passport')
 
 
-require('dotenv').config()
+// require('dotenv').config()
 
 var app = express()
 
@@ -36,10 +36,10 @@ app.use((err,req,res,next)=>{
 })
 
 if(process.env.NODE_ENV==='production'){
-    app.use(express.static(__dirname+'/public/'))
+    app.use(express.static('public'))
 
     app.get(/.*/,(req,res)=>{
-        res.sendFile(__dirname+'/public/index.html')
+        res.sendFile('public/index.html')
     })
 }
 
