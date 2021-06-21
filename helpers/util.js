@@ -5,7 +5,7 @@ const jsonwebtoken = require('jsonwebtoken')
 
 // const pathToKey = path.join(__dirname,'..','id_rsa_priv.pem')
 // const PRIV_KEY = fs.readFileSync(pathToKey,'utf8')
-const PRIV_KEY = process.env.id_rsa_priv.replace(/\\n/g, '\n')
+const PRIV_KEY = process.env.PRIV.replace(/\\n/g, '\n')
 
 function validPassword(password, hash,salt){
     var hashVerify = crypto.pbkdf2Sync(password,salt,10000,64,'sha512').toString('hex')
