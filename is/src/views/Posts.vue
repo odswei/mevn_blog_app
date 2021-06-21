@@ -25,9 +25,7 @@ export default {
     const token = this.$store.state.user.token;
     if (token) {
       axios.defaults.headers.common["Authorization"] = token;
-      axios
-        .get("//localhost:3001/series")
-        .then(({ data }) => (this.posts = data));
+      axios.get("/series").then(({ data }) => (this.posts = data));
     }
   },
 };

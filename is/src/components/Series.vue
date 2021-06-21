@@ -4,7 +4,9 @@
     ><span
       class="series-title"
       v-on:mouseleave="hover = false"
+      @blur="hover = false"
       v-on:mouseenter="hover = true"
+      @click="hover = true"
       >{{ series.s_title }}
       <span v-if="hover">
         <button class="dseries" @click="deleteSeries">Delete Series</button>
@@ -35,7 +37,7 @@ export default {
   },
   methods: {
     deleteSeries() {
-      axios.delete(`//localhost:3001/series/${this.series._id}`).then(() => {
+      axios.delete(`/series/${this.series._id}`).then(() => {
         this.$store.dispatch("setSignal", true);
       });
     },
@@ -52,5 +54,8 @@ export default {
   border-radius: 10px;
   margin-left: 10px;
   font-weight: bold;
+}
+.series-index {
+  margin-right: 8px;
 }
 </style>

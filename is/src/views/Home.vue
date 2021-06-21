@@ -96,7 +96,7 @@ export default {
   },
 
   created() {
-    axios.get("//localhost:3001/series").then(({ data }) => {
+    axios.get("/series").then(({ data }) => {
       this.componentLoaded = true;
       this.series = data;
     });

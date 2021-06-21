@@ -64,11 +64,9 @@ export default {
   //   },
   // },
   created() {
-    axios
-      .get(`//localhost:3001/chapter/${this.$route.params.id}`)
-      .then(({ data }) => {
-        this.contents = data.contents;
-      });
+    axios.get(`/chapter/${this.$route.params.id}`).then(({ data }) => {
+      this.contents = data.contents;
+    });
   },
   watch: {
     contents() {

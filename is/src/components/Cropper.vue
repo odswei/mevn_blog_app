@@ -95,7 +95,7 @@ export default {
       formData.append("file", this.file);
       // console.log(formData);
       try {
-        axios.post("//localhost:3001/upload", formData).then((res) => {
+        axios.post("/upload", formData).then((res) => {
           console.log(res);
           this.message = "uploaded!";
           this.$store.state.imgChange = true;

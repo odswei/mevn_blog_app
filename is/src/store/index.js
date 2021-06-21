@@ -41,21 +41,19 @@ export default new Vuex.Store({
   actions: {
     // eslint-disable-next-line no-unused-vars
     login({ commit }, credentials) {
-      return axios
-        .post("//localhost:3001/login", credentials)
-        .then(({ data }) => {
-          commit("SET_USER_DATA", data);
-        });
+      return axios.post("/login", credentials).then(({ data }) => {
+        commit("SET_USER_DATA", data);
+      });
     },
 
     register(context, credentials) {
-      return axios.post("//localhost:3001/register", credentials);
+      return axios.post("/register", credentials);
     },
     logout({ commit }) {
       commit("CLEAR_USER_DATA");
     },
     getSeries({ commit }) {
-      return axios.get(`//localhost:3001/myseries`).then(({ data }) => {
+      return axios.get(`/myseries`).then(({ data }) => {
         commit("SET_SERIES", data);
       });
     },
@@ -66,7 +64,7 @@ export default new Vuex.Store({
       if (state.user) {
         const token = localStorage.getItem("xhtrvbq");
         axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get("//localhost:3001/image").then(({ data }) => {
+        axios.get("/image").then(({ data }) => {
           commit("SET_IMAGE", data);
         });
       } else {
@@ -79,9 +77,7 @@ export default new Vuex.Store({
       commit("SET_SIGNAL", data);
     },
     setSeriesTitle({ commit }, data) {
-      axios
-        .post("//localhost:3001/series", data)
-        .then(() => commit("SET_SIGNAL", true));
+      axios.post("/series", data).then(() => commit("SET_SIGNAL", true));
     },
   },
   modules: {},

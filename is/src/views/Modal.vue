@@ -10,16 +10,16 @@
         </v-icon>
       </div>
 
-      <login v-if="login" />
-      <register v-if="!login" />
-      <div v-if="login">
+      <login v-if="toLogin" />
+      <register v-if="!toLogin" />
+      <div v-if="toLogin">
         Don't have an account?
-        <button @click="login = false">Register</button>
+        <button @click="toLogin = false">Register</button>
       </div>
 
-      <div v-if="!login">
+      <div v-if="!toLogin">
         Already have an account?
-        <button @click="login = true">Login</button>
+        <button @click="toLogin = true">Login</button>
       </div>
     </div>
   </transition>
@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      login: true,
+      toLogin: true,
     };
   },
   computed: {
@@ -59,15 +59,19 @@ export default {
 .modal-default-button {
   float: right;
 }
+
 .modal-body {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
-  background-color: aliceblue;
+  background-color: #ffffff;
+  color: #332f2f;
   z-index: 1;
   padding: 30px;
+  border: 1px solid #524c4c;
+  border-radius: 5px;
 }
 
 h2 {

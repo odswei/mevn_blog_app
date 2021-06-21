@@ -35,5 +35,14 @@ app.use((err,req,res,next)=>{
     }
 })
 
+if(process.env.NODE_ENV==='production'){
+    app.use(express.static(__dirname+'/public/'))
 
-app.listen(3001, ()=>{console.log('listen to port 3001')})
+    app.get(/.*/,(req,res)=>{
+        res.sendFile(__dirname+'/public/index.html')
+    })
+}
+
+
+
+app.listen( process.env.PORT || 3001, ()=>{console.log('listen to port 3001')})

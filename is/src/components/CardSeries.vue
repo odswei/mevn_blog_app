@@ -56,7 +56,7 @@
               </div>
               <div>
                 <span class="save_icon">
-                  <v-icon size="30" class="follower-claps-count"
+                  <v-icon size="42" class="follower-claps-count"
                     >$vuetify.icons.save_btn</v-icon
                   >
                 </span>
@@ -169,8 +169,8 @@ export default {
 
 <style scoped>
 .u_img {
-  width: 40px;
-  height: 40px;
+  width: 65px;
+  height: 65px;
 }
 
 img {
@@ -185,7 +185,7 @@ img {
 }
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   grid-column-start: auto;
   grid-gap: 10px;
 }
@@ -196,12 +196,10 @@ img {
 }
 
 .card {
-  /* width: 320px; */
-  //background-color: rgb(252, 4, 4);
   border-radius: 6px;
-  /* margin: 10px; */
+
   grid-auto-rows: minmax(250px, auto);
-  /* border: 1px solid black; */
+
   display: grid;
 
   grid-template-columns: 0.8fr 2fr;
@@ -212,22 +210,11 @@ img {
 }
 .tag {
   margin-right: 10px;
-  /* background-color: brown; */
 }
 
 .card div:first-child {
-  /* width: 320px; */
-  /* background-color: rgb(255, 85, 85); */
-  /* margin: 10px; */
-  text-align: center;
-  //background-color: aqua;
-}
-
-.card div:nth-child(2) {
-  /* width: 320px; */
-  /* background-color: red; */
-
-  //background-color: bisque;
+  text-align: end;
+  margin-right: 20px;
 }
 
 .row-gap {

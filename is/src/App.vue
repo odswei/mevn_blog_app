@@ -44,7 +44,9 @@
       </div>
     </div>
     <v-main
-      ><modal v-if="showModal" @close="showModal = false" />
+      ><div>
+        <modal v-if="showModal" @close="showModal = false" />
+      </div>
       <div class="main"><router-view /></div
     ></v-main>
   </v-app>
@@ -60,6 +62,7 @@ export default {
   name: "App",
   components: {
     // AllPosts,
+
     NavProfile,
     Modal,
   },
@@ -118,7 +121,7 @@ export default {
   top: 0px; /* required */
 }
 .main {
-  max-width: 1100px;
+  max-width: 1300px;
   margin: auto;
 }
 

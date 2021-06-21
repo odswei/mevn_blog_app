@@ -1,5 +1,5 @@
 <template>
-  <v-container class="maincard" v-if="series">
+  <v-container class="main-card" v-if="series">
     <h1>{{ series.s_title }}</h1>
     <div class="chapters-container">
       <div class="chapter-list">
@@ -7,25 +7,25 @@
           <div class="step-container">
             <span class="dot">
               <span>{{ chapter.chapter_no }}</span>
-            </span>
 
-            <span class="c-title">
-              <button @click="viewContent(chapter._id)">
-                {{ chapter.c_title }}
-              </button>
-              <!-- <router-link
+              <span class="c-title">
+                <button @click="viewContent(chapter._id)">
+                  {{ chapter.c_title }}
+                </button>
+                <!-- <router-link
                 v-if="loggedIn"
                 style="text-decoration: none"
                 :to="{ name: 'Editor', params: { id: chapter._id } }"
               >
                 <v-btn plain class="write-button"> Edit </v-btn></router-link
-              > -->
+              > --></span
+              >
             </span>
           </div>
           <!-- <div class="vl"></div> -->
         </div>
       </div>
-      <div>
+      <div class="body">
         <h2>{{ title }}</h2>
         <editor-content :editor="editor" />
       </div>
@@ -96,16 +96,22 @@ export default {
 </script>
 
 <style scoped>
+.main-card {
+  color: rgb(38, 37, 37);
+}
+.body {
+  padding-left: 25px;
+}
+h1 {
+  margin-bottom: 20px;
+}
 .c-no {
-  width: 26px;
   margin: 0 0 0 -13px;
 }
 .dot {
-  height: 26px;
-  width: 3px;
-  margin-right: 20px;
-  text-align: center;
-  background-color: #bbb;
+  padding-left: 10px;
+  text-align: right;
+  border-left: 5px solid rgba(255, 5, 5, 0.433);
   display: inline-block;
 }
 .vl {

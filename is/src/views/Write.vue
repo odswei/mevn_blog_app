@@ -122,7 +122,7 @@ export default {
       const content = this.rows;
       const token = this.$store.state.user.token;
       axios.defaults.headers.common["Authorization"] = token;
-      axios.post("//localhost:3001/p/post", { post: content }).then(() => {
+      axios.post("/p/post", { post: content }).then(() => {
         this.$router.push({ name: "Home" });
       });
     },

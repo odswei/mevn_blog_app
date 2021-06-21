@@ -3,7 +3,7 @@
     <v-menu
       v-model="menu"
       :close-on-content-click="false"
-      :nudge-width="200"
+      :nudge-width="220"
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
@@ -12,16 +12,18 @@
         </v-avatar>
       </template>
 
-      <v-card>
+      <v-card class="box">
         <v-list>
           <v-list-item>
             <v-list-item-avatar>
-              <v-avatar size="36"> <img v-bind:src="image" /></v-avatar>
+              <v-avatar class="avatar"> <img v-bind:src="image" /></v-avatar>
             </v-list-item-avatar>
 
             <v-list-item-content>
               <v-list-item-title>{{ info }}</v-list-item-title>
-              <v-list-item-subtitle>Santania</v-list-item-subtitle>
+              <v-list-item-subtitle
+                ><span class="username"> Santania</span>
+              </v-list-item-subtitle>
             </v-list-item-content>
             <!-- 
             <v-list-item-action>
@@ -40,24 +42,24 @@
               <v-switch v-model="message" color="purple"></v-switch>
             </v-list-item-action> -->
             <v-list-item-title
-              ><router-link to="/setting"
+              ><router-link class="setting" to="/setting"
                 >Setting</router-link
               ></v-list-item-title
             >
           </v-list-item>
-
+          <!-- 
           <v-list-item>
-            <!-- <v-list-item-action>
+            <v-list-item-action>
               <v-switch v-model="hints" color="purple"></v-switch>
-            </v-list-item-action> -->
+            </v-list-item-action>
             <v-list-item-title>Enable hints</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
         </v-list>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <button type="button" @click="logout">Logout</button>
+          <button class="l-btn" type="button" @click="logout">Logout</button>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -81,9 +83,7 @@ export default {
     const token = this.$store.state.user.token;
     if (token) {
       axios.defaults.headers.common["Authorization"] = token;
-      axios
-        .get("//localhost:3001/p/test")
-        .then(({ data }) => (this.info = data.username));
+      axios.get("/p/test").then(({ data }) => (this.info = data.username));
     }
   },
   methods: {
@@ -117,7 +117,23 @@ export default {
 </script>
 
 <style scoped>
+.box {
+  padding: 10px;
+  background-color: aqua;
+}
+.username {
+  color: rgb(34, 32, 32);
+  font-size: 18px;
+}
 img {
   object-fit: fill;
+}
+.setting {
+  text-decoration: none;
+  color: rgb(34, 32, 32);
+}
+.l-btn {
+  margin-right: 15px;
+  margin-bottom: 5px;
 }
 </style>
