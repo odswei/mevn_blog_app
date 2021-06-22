@@ -5,14 +5,11 @@ const path =require('path')
 
 let PRIV_KEY
 
-if(process.env.NODE_ENV=="production"){
-    PRIV_KEY = process.env.PRIV.replace(/\\n/g, '\n')
-}
-else{
-    const pathToKey = path.join(__dirname,'..','id_rsa_priv.pem')
-    PRIV_KEY = fs.readFileSync(pathToKey,'utf8')
 
-}
+    const pathToKey = path.join(__dirname,'..','id_rsa_priv.pem')
+   const PRIV_KEY = fs.readFileSync(pathToKey,'utf8')
+
+
 
 
 function validPassword(password, hash,salt){

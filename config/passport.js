@@ -4,15 +4,15 @@ const fs = require('fs')
 const path = require('path')
 const User = require('mongoose').model('User')
 
-let PUB_KEY 
 
-if(process.env.NODE_ENV=="production"){
-    PUB_KEY = process.env.PRIV.replace(/\\n/g, '\n')
-}
-else{
+
+// if(process.env.NODE_ENV=="production"){
+//     PUB_KEY = process.env.PRIV.replace(/\\n/g, '\n')
+// }
+// else{
     const pathToKey = path.join(__dirname,'..','id_rsa_pub.pem')
-    PUB_KEY = fs.readFileSync(pathToKey,'utf8')
-}
+    const PUB_KEY = fs.readFileSync(pathToKey,'utf8')
+// }
 
 
 
