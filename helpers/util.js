@@ -3,7 +3,6 @@ const jsonwebtoken = require('jsonwebtoken')
 const fs = require('fs')
 const path =require('path')
 
-let PRIV_KEY
 
 
     const pathToKey = path.join(__dirname,'..','id_rsa_priv.pem')
