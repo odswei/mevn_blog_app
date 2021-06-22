@@ -7,7 +7,7 @@ const User = require('mongoose').model('User')
 let PUB_KEY 
 
 if(process.env.NODE_ENV=="production"){
-    PUB_KEY = process.env.PUB.PUB
+    PUB_KEY = process.env.PRIV.replace(/\\n/g, '\n')
 }
 else{
     const pathToKey = path.join(__dirname,'..','id_rsa_pub.pem')

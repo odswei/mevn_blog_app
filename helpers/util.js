@@ -6,7 +6,7 @@ const path =require('path')
 let PRIV_KEY
 
 if(process.env.NODE_ENV=="production"){
-    PRIV_KEY = process.env.PUB.PRIV
+    PRIV_KEY = process.env.PRIV.replace(/\\n/g, '\n')
 }
 else{
     const pathToKey = path.join(__dirname,'..','id_rsa_priv.pem')
