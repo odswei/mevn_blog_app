@@ -24,13 +24,14 @@ router.get('/series/:id/chapters', function(req, res, next)
 
 
 //area terlarang udah works well!
-router.post('/chapter/:id*?', passport.authenticate('jwt', { session: false }), async function(req, res, next)
+router.post('/chapter/:id?', passport.authenticate('jwt', { session: false }), async function(req, res, next)
 {
+    console.log(req.params.d)
     // const series_id = req.params.id
     console.log(req.user.id)
     // const {_id} = await Image.findOne({uid:req.user.id})
     // console.log(_id)
-     const chapterId = req.params.chapterId
+     const chapterId = req.params.id
     
     const chapter = {
         c_title : req.body.c_title,
