@@ -119,7 +119,6 @@ export default {
 <style scoped>
 .box {
   padding: 10px;
-  background-color: aqua;
 }
 .username {
   color: rgb(34, 32, 32);
