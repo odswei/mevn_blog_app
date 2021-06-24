@@ -95,8 +95,8 @@ async function isAuthenticated() {
   let user = false;
   if (token) {
     if (process.env.NODE_ENV == "production") {
-      // axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-      axios.defaults.baseURL = "http://localhost:3001";
+      axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+      // axios.defaults.baseURL = "http://localhost:3001";
       // console.log(process.env.VUE_APP_BASE_URL);
     } else {
       axios.defaults.baseURL = "http://localhost:3001";

@@ -27,8 +27,8 @@ new Vue({
     );
     // console.log("BASE", process.env.BASE_URL);
     if (process.env.NODE_ENV == "production") {
-      // axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-      axios.defaults.baseURL = "http://localhost:3001";
+      axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+      // axios.defaults.baseURL = "http://localhost:3001";
     } else {
       axios.defaults.baseURL = "http://localhost:3001";
     }
