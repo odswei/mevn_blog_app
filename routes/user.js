@@ -116,6 +116,10 @@ router.post('/upp',passport.authenticate('jwt',{session:false}),function(req,res
 
 })
 
+router.get('/user',passport.authenticate('jwt',{session:false}),(req,res,next)=>{
+    res.send({user:true})
+})
+
 // const fileFilter = (req,res,cb)=>{
 //     const allowedTypes = ["image/jpeg","image/jpg","image/png"]
 //     if(!allowedTypes.includes(file.type)){
@@ -171,7 +175,7 @@ router.get('/image',  passport.authenticate('jwt',{session:false}),(req, res) =>
         res.contentType('json')
         console.log(items)
         base64String = Buffer.from(items.img.data).toString('base64')
-        res.send({id:items._id,
+        res.send({u:req.user.username,
             data:base64String,contentType:items.img.contentType});
         }
  

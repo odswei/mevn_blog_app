@@ -22,7 +22,7 @@
             <v-list-item-content>
               <v-list-item-title>{{ info }}</v-list-item-title>
               <v-list-item-subtitle
-                ><span class="username"> Santania</span>
+                ><span class="username"> {{ username }}</span>
               </v-list-item-subtitle>
             </v-list-item-content>
             <!-- 
@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -78,13 +77,6 @@ export default {
       hints: true,
       imageBytes: null,
     };
-  },
-  mounted() {
-    const token = this.$store.state.user.token;
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = token;
-      axios.get("/p/test").then(({ data }) => (this.info = data.username));
-    }
   },
   methods: {
     logout() {
@@ -101,6 +93,9 @@ export default {
     },
     image() {
       return this.$store.getters.getImage;
+    },
+    username() {
+      return this.$store.getters.getUname;
     },
   },
   watch: {

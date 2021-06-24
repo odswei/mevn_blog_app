@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     hellow() {
-      console.log(typeof this.content);
+      // console.log(typeof this.content);
       return this.content;
     },
   },
@@ -103,9 +103,9 @@ export default {
         published: true,
         sid: this.sid,
       };
-      console.log(chapter_content);
+      // console.log(chapter_content);
 
-      axios.post(`/chapter/${this.chapter_id}`, chapter_content).then(() => {
+      axios.post(`/chapter`, chapter_content).then(() => {
         this.$router.push({ name: "Myseries" });
       });
     },
@@ -116,6 +116,7 @@ export default {
         contents: this.content,
         c_title: this.c_title,
         published: true,
+        sid: this.sid,
       };
 
       axios.post(`/chapter/${this.chapter_id}`, chapter_content).then(() => {
@@ -124,14 +125,15 @@ export default {
         });
       });
 
-      console.log(chapter_content);
+      // console.log(chapter_content);
     },
   },
   created() {
     if (this.$route.params.id) {
+      // console.log(this.$route.params.id);
       axios.get(`/chapter/${this.$route.params.id}`).then(({ data }) => {
-        console.log(data);
-        this.series_id = data.series_id._id;
+        // console.log(data);
+        this.sid = data.series_id._id;
         this.s_title = data.series_id.s_title;
         this.content = data.contents;
         this.c_title = data.c_title;
@@ -140,7 +142,7 @@ export default {
     } else {
       this.s_title = this.$route.query.s;
       this.sid = this.$route.query.sid;
-      console.log(this.sid);
+      // console.log(this.sid);
     }
   },
 };

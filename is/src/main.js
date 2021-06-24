@@ -11,7 +11,6 @@ new Vue({
   router,
   store,
   created() {
-    console.log("dipanggil");
     const chimney = localStorage.getItem("xhtrvbq");
 
     if (chimney) {
@@ -26,7 +25,13 @@ new Vue({
         return Promise.reject(error);
       }
     );
-
+    // console.log("BASE", process.env.BASE_URL);
+    if (process.env.NODE_ENV == "production") {
+      // axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+      axios.defaults.baseURL = "http://localhost:3001";
+    } else {
+      axios.defaults.baseURL = "http://localhost:3001";
+    }
     axios.defaults.headers.common["Authorization"] = "Bearer " + chimney;
   },
   vuetify,

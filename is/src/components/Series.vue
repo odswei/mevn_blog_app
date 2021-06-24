@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     deleteSeries() {
-      axios.delete(`/series/${this.series._id}`).then(() => {
+      axios.delete(`/api/series/${this.series._id}`).then(() => {
         this.$store.dispatch("setSignal", true);
       });
     },

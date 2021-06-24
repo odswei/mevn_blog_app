@@ -81,7 +81,6 @@ export default {
   },
 
   created() {
-    // axios.defaults.headers.common["Authorization"] = this.$store.state.user;
     // axios.get(`//localhost:3001/myseries`).then(({ data }) => {
     //   this.series = data;
     // });

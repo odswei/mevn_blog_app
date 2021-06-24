@@ -2,10 +2,19 @@ const express = require('express')
 const cors = require('cors')
 const passport = require('passport')
 const path =require('path')
+var history = require('connect-history-api-fallback');
+
+
+// const corsOptions = {
+//     origin: 'http://127.0.0.1:8080',
+//     allowedHeaders: 'content-Type, Authorization',
+//     maxAge:3166950
+// }
 
 require('dotenv').config()
 
 var app = express()
+
 
 require('./config/database')
 
@@ -26,7 +35,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(cors())
 
 
-app.use(require('./routes'))
+
 
 app.use((err,req,res,next)=>{
     if(err.code == "INCORRECT_FILETYPE"){
@@ -34,14 +43,38 @@ app.use((err,req,res,next)=>{
         return
     }
 })
+//    app.use(function(err, req, res, next) {
+//     if(401 == err.status) {
+//         res.redirect("/")
+//     }
+//   }); 
+  
+    if(process.env.NODE_ENV==='production'){
 
-if(process.env.NODE_ENV==='production'){
-    app.use((express.static(__dirname + '/public')))
-
-    app.get(/.*/,(req,res)=>{
+    app.use('/',(express.static(__dirname + '/public')))
+    app.use(require('./routes'))
+   
+    app.get('*', function(req, res) {
         res.sendFile(__dirname + '/public/index.html')
+
+        });
+
+app.use(history()) 
+  app.use((express.static(__dirname + '/public')))
+    // app.get(/.*/,(req,res)=>{
+    //     res.sendFile(__dirname + '/public/index.html')
+    // })
+    
+    app.use(function (req, res) {
+        // Optional 404 handler
+        res.status(401);
+        res.redirect('/')
     })
+    
+   
 }
+
+
 
 
 

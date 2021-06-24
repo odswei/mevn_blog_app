@@ -9,6 +9,7 @@ import Chapter from "../views/Chapter.vue";
 import Series from "../views/Series.vue";
 import Myseries from "../views/Myseries.vue";
 import Setting from "../views/Setting.vue";
+import axios from "axios";
 
 Vue.use(VueRouter);
 
@@ -77,6 +78,10 @@ const routes = [
       requiresAuth: true,
     },
   },
+  {
+    path: "*",
+    component: Home,
+  },
 ];
 
 const router = new VueRouter({
@@ -85,12 +90,32 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const loggedIn = localStorage.getItem("xhtrvbq");
-  if (to.matched.some((record) => record.meta.requiresAuth) && !loggedIn) {
-    next({ name: "Home" });
+async function isAuthenticated() {
+  const token = localStorage.getItem("xhtrvbq");
+  let user = false;
+  if (token) {
+    if (process.env.NODE_ENV == "production") {
+      // axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+      axios.defaults.baseURL = "http://localhost:3001";
+      // console.log(process.env.VUE_APP_BASE_URL);
+    } else {
+      axios.defaults.baseURL = "http://localhost:3001";
+    }
+    axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+    await axios.get("/user").then(({ data }) => {
+      user = data.user;
+      // console.log(user);
+    });
   }
-  next();
+  return user;
+}
+
+router.beforeEach(async (to, from, next) => {
+  const isAuth = await isAuthenticated();
+  // console.log("cek", isAuth);
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuth) {
+    next("/");
+  } else next();
 });
 
 export default router;

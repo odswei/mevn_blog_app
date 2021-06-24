@@ -9,7 +9,11 @@
     <span class="published" v-if="chapter.published == true">Published</span>
     <span v-if="hover">
       <button class="live">Live</button>
-      <router-link :to="{ name: 'Editor', params: { id: chapter._id } }"
+      <router-link
+        :to="{
+          name: 'Editor',
+          params: { id: chapter._id },
+        }"
         ><button class="edit">Edit</button></router-link
       >
       <button class="private">Private</button>

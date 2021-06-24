@@ -53,7 +53,7 @@ export default new Vuex.Store({
       commit("CLEAR_USER_DATA");
     },
     getSeries({ commit }) {
-      return axios.get(`/myseries`).then(({ data }) => {
+      return axios.get("/api/myseries").then(({ data }) => {
         commit("SET_SERIES", data);
       });
     },
@@ -77,7 +77,7 @@ export default new Vuex.Store({
       commit("SET_SIGNAL", data);
     },
     setSeriesTitle({ commit }, data) {
-      axios.post("/series", data).then(() => commit("SET_SIGNAL", true));
+      axios.post("/api/series", data).then(() => commit("SET_SIGNAL", true));
     },
   },
   modules: {},
@@ -101,6 +101,11 @@ export default new Vuex.Store({
     },
     getSeries(state) {
       return state.series;
+    },
+    getUname(state) {
+      if (state.image) {
+        return state.image.u;
+      }
     },
   },
 });
