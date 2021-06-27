@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <!-- <v-row>
       <v-col v-for="{ post } in series" :key="post._id" cols="12" md="6" sm="12">
         <v-card elevation="0">
@@ -20,13 +20,13 @@
     <!-- <div v-for="(post, index) of series" :key="index">{{ post.s_title }}</div> -->
     <!-- {{ series }} -->
 
-    <span class="input-container">
+    <div class="input-container">
       <input type="text" v-model="search_query" placeholder="Search . ." />
-    </span>
+    </div>
 
     <br />
     <card-series :series="resultQuery" />
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -34,7 +34,7 @@
 // @ is an alias to /src
 // import ProfilePhoto from "../components/ProfilePhoto.vue";
 import axios from "axios";
-
+import NProgress from "nprogress";
 import CardSeries from "../components/CardSeries.vue";
 export default {
   components: {
@@ -96,7 +96,22 @@ export default {
   },
 
   created() {
-    axios.get("/api/series").then(({ data }) => {
+    const apiClient = axios.create({
+      baseURL: process.env.VUE_APP_BASE_URL,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    });
+
+    apiClient.interceptors.request.use((config) => {
+      NProgress.start();
+      return config;
+    });
+
+    apiClient.interceptors.response.use((response) => {
+      NProgress.done();
+      return response;
+    });
+    apiClient.get("/api/series").then(({ data }) => {
       this.componentLoaded = true;
       this.series = data;
     });
@@ -113,13 +128,20 @@ function filterByValue(array, string) {
 
 <style scoped>
 .input-container {
-  padding: 0px 0px 0px 10px;
+  padding: 15px 0px 0px 20px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 88px;
+  z-index: 2;
+  background-color: rgb(255, 255, 255);
 }
 input {
   border-radius: 30px;
   background-color: white;
   padding: 10px 30px 10px 30px;
-  width: 400px;
+  width: 80%;
+
+  border: 2px solid rgb(220, 220, 220);
 }
 input:focus {
   outline: none;

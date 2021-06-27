@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import axios from "axios";
+import "./nprogress.css";
 
 Vue.config.productionTip = false;
 
@@ -26,13 +27,12 @@ new Vue({
       }
     );
     // console.log("BASE", process.env.BASE_URL);
-    if (process.env.NODE_ENV == "production") {
-      axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
-      // axios.defaults.baseURL = "http://localhost:3001";
-    } else {
-      axios.defaults.baseURL = "http://localhost:3001";
-    }
-    axios.defaults.headers.common["Authorization"] = "Bearer " + chimney;
+    // if (process.env.NODE_ENV == "production") {
+
+    // axios.defaults.baseURL = "http://localhost:3001";
+    // } else {
+    //   axios.defaults.baseURL = "http://localhost:3001";
+    // }
   },
   vuetify,
   render: (h) => h(App),

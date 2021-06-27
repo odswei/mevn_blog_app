@@ -88,9 +88,6 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
-    imgC() {
-      return this.$store.state.imgChange;
-    },
     image() {
       return this.$store.getters.getImage;
     },
@@ -98,13 +95,7 @@ export default {
       return this.$store.getters.getUname;
     },
   },
-  watch: {
-    imgC() {
-      this.$store
-        .dispatch("getImage")
-        .then(() => this.$store.dispatch("getImage"));
-    },
-  },
+
   created() {
     this.$store.dispatch("getImage");
   },

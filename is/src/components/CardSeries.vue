@@ -202,7 +202,7 @@ img {
 
   display: grid;
 
-  grid-template-columns: 0.8fr 2fr;
+  grid-template-columns: 0.5fr 2fr;
 }
 
 .username {

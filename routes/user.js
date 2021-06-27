@@ -138,26 +138,31 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     // limits: { fileSize: 3000000 },
-    fileFilter(req, file, cb) {
-        console.log(file)
-      if (!file.originalname.match(/\.(jpg|jpeg|png|PNG)$/)) { //allowed file extensions
-        return cb(new Error("please upload png,jpeg or jpg"));
-      }
-      cb(undefined, true);
-    }
+    // fileFilter(req, file, cb) {
+    //     console.log(file)
+    //   if (!file.originalname.match(/\.(jpg|jpeg|png|PNG)$/)) { //allowed file extensions
+    //     return cb(new Error("please upload png,jpeg or jpg"));
+    //   }
+    //   cb(undefined, true);
+    // }
   });
 
 router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
          const uid =   req.user.id
+  console.log("file",req.file)
+         
+        var nimg ={
+                    data:fs.readFileSync(req.file.path),
+                    contentType:req.file.mimetype     
+                };
 
-         var nimg ={
-            data:fs.readFileSync(req.file.path),
-            contentType:req.file.mimetype     
-         };
 
-         console.log(nimg)
-         console.log("file",req.file)
+        //  var nimg ={
+        //     data:req.body.data,   
+        //  };
 
+         console.log("nimg",nimg)
+       
          Image.findOneAndUpdate({uid:uid},{img:nimg},{upsert:true, new:true, useFindAndModify: false, setDefaultOnInsert:true},function(err,item){
              if(err)return(err)
             //  console.log("hey",item)
@@ -175,9 +180,13 @@ router.get('/image',  passport.authenticate('jwt',{session:false}),(req, res) =>
         res.contentType('json')
         console.log(items)
         base64String = Buffer.from(items.img.data).toString('base64')
+        const image = 'data:'+items.img.contentType+';base64,'+base64String
         res.send({u:req.user.username,
-            data:base64String,contentType:items.img.contentType});
+            data:image});
         }
+        // res.send({u:req.user.username,
+        //     data:items.img});
+        // }
  
     })
 });

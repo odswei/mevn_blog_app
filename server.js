@@ -36,18 +36,19 @@ app.use(cors())
 
 
 
-
-app.use((err,req,res,next)=>{
-    if(err.code == "INCORRECT_FILETYPE"){
-        res.status(422).json({error:"only images are allowed"})
-        return
-    }
-})
+// app.use((err,req,res,next)=>{
+//     if(err.code == "INCORRECT_FILETYPE"){
+//         res.status(422).json({error:"only images are allowed"})
+//         return
+//     }
+// })
 //    app.use(function(err, req, res, next) {
 //     if(401 == err.status) {
 //         res.redirect("/")
 //     }
 //   }); 
+
+// app.use(require('./routes'))
   
     if(process.env.NODE_ENV==='production'){
 
@@ -59,11 +60,11 @@ app.use((err,req,res,next)=>{
 
         });
 
-app.use(history()) 
-  app.use((express.static(__dirname + '/public')))
-    // app.get(/.*/,(req,res)=>{
-    //     res.sendFile(__dirname + '/public/index.html')
-    // })
+    app.use(history()) 
+    app.use((express.static(__dirname + '/public')))
+        // app.get(/.*/,(req,res)=>{
+        //     res.sendFile(__dirname + '/public/index.html')
+        // })
     
     app.use(function (req, res) {
         // Optional 404 handler
@@ -78,4 +79,4 @@ app.use(history())
 
 
 
-app.listen( process.env.PORT || 3001, ()=>{console.log('listen to port 3001')})
+app.listen( process.env.PORT ||3000, ()=>{console.log('listen to port 3000')})

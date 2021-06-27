@@ -1,6 +1,25 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import NProgress from "nprogress";
+
+const chimney = localStorage.getItem("xhtrvbq");
+
+const apiClient = axios.create({
+  baseURL: process.env.VUE_APP_BASE_URL,
+  Accept: "application/json",
+  "Content-Type": "application/json",
+});
+
+apiClient.interceptors.request.use((config) => {
+  NProgress.start();
+  return config;
+});
+
+apiClient.interceptors.response.use((response) => {
+  NProgress.done();
+  return response;
+});
 
 Vue.use(Vuex);
 
@@ -37,23 +56,30 @@ export default new Vuex.Store({
     SET_SIGNAL(state, data) {
       state.signal = data;
     },
+    SET_UPDATED_IMAGE(state, data) {
+      state.image.data = data;
+    },
   },
   actions: {
     // eslint-disable-next-line no-unused-vars
     login({ commit }, credentials) {
-      return axios.post("/login", credentials).then(({ data }) => {
+      return apiClient.post("/login", credentials).then(({ data }) => {
         commit("SET_USER_DATA", data);
       });
     },
 
     register(context, credentials) {
-      return axios.post("/register", credentials);
+      return apiClient.post("/register", credentials);
     },
     logout({ commit }) {
       commit("CLEAR_USER_DATA");
     },
     getSeries({ commit }) {
-      return axios.get("/api/myseries").then(({ data }) => {
+      apiClient.interceptors.request.use(function (config) {
+        config.headers.Authorization = "Bearer " + chimney;
+        return config;
+      });
+      return apiClient.get("/api/myseries").then(({ data }) => {
         commit("SET_SERIES", data);
       });
     },
@@ -62,9 +88,11 @@ export default new Vuex.Store({
     },
     getImage({ commit, state }) {
       if (state.user) {
-        const token = localStorage.getItem("xhtrvbq");
-        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-        axios.get("/image").then(({ data }) => {
+        apiClient.interceptors.request.use(function (config) {
+          config.headers.Authorization = "Bearer " + chimney;
+          return config;
+        });
+        apiClient.get("/image").then(({ data }) => {
           commit("SET_IMAGE", data);
         });
       } else {
@@ -77,7 +105,12 @@ export default new Vuex.Store({
       commit("SET_SIGNAL", data);
     },
     setSeriesTitle({ commit }, data) {
-      axios.post("/api/series", data).then(() => commit("SET_SIGNAL", true));
+      apiClient
+        .post("/api/series", data)
+        .then(() => commit("SET_SIGNAL", true));
+    },
+    setImgChange({ commit }, data) {
+      commit("SET_UPDATED_IMAGE", data);
     },
   },
   modules: {},
@@ -87,9 +120,7 @@ export default new Vuex.Store({
     },
     getImage(state) {
       if (state.image) {
-        return (
-          "data:" + state.image.contentType + ";base64, " + state.image.data
-        );
+        return state.image.data;
       }
       return state.image;
     },
