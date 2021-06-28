@@ -147,7 +147,7 @@ const upload = multer({
     // }
   });
 
-router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
+router.post('/image/upload',passport.authenticate('jwt',{session:false}),upload.single('file'),(req,res)=>{
          const uid =   req.user.id
   console.log("file",req.file)
          
@@ -166,7 +166,7 @@ router.post('/upload',passport.authenticate('jwt',{session:false}),upload.single
          Image.findOneAndUpdate({uid:uid},{img:nimg},{upsert:true, new:true, useFindAndModify: false, setDefaultOnInsert:true},function(err,item){
              if(err)return(err)
             //  console.log("hey",item)
-           res.json({ success: true});
+           res.send({ success: true});
          })
      
 })

@@ -86,20 +86,14 @@ export default new Vuex.Store({
     setSeries({ commit }, seriesData) {
       commit("SET_SERIES", seriesData);
     },
-    getImage({ commit, state }) {
-      if (state.user) {
-        apiClient.interceptors.request.use(function (config) {
-          config.headers.Authorization = "Bearer " + chimney;
-          return config;
-        });
-        apiClient.get("/image").then(({ data }) => {
-          commit("SET_IMAGE", data);
-        });
-      } else {
-        console.log(this.$vuetify.save_btn);
-        const data = null;
+    async getImage({ commit, state }) {
+      await apiClient.interceptors.request.use(function (config) {
+        config.headers.Authorization = "Bearer " + state.user;
+        return config;
+      });
+      await apiClient.get("/image").then(({ data }) => {
         commit("SET_IMAGE", data);
-      }
+      });
     },
     setSignal({ commit }, data) {
       commit("SET_SIGNAL", data);

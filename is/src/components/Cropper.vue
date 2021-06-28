@@ -108,8 +108,13 @@ export default {
       }
     },
     onSubmit() {
-      const width = 175;
-      const height = 175;
+      const apiClient = axios.create({
+        baseURL: process.env.VUE_APP_BASE_URL,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      });
+      const width = 100;
+      const height = 100;
       const reader = new FileReader();
       reader.readAsDataURL(dataURItoBlob(this.preview, this.file.type));
 
@@ -160,7 +165,12 @@ export default {
 
               try {
                 let dataResult = new Promise((resolve) => {
-                  axios.post("/upload", formData).then(() => {
+                  const config = {
+                    headers: {
+                      "content-type": "multipart/form-data",
+                    },
+                  };
+                  apiClient.post("/image/upload", formData, config).then(() => {
                     // if (res.status === 200) {
                     toBase64(blob).then((data) => {
                       // console.log("datttaaaaa", data);
