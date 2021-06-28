@@ -68,6 +68,8 @@
                         name: 'Series',
                         params: {
                           id: chapter.series_id._id,
+                        },
+                        query: {
                           chapter_id: chapter._id,
                         },
                       }"
@@ -82,6 +84,8 @@
                         name: 'Series',
                         params: {
                           id: chapter.series_id._id,
+                        },
+                        query: {
                           chapter_id: chapter._id,
                         },
                       }"

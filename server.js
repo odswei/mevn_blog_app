@@ -6,7 +6,7 @@ var history = require('connect-history-api-fallback');
 
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:8080',
     allowedHeaders: 'content-Type, Authorization',
     maxAge:3166950
 }
@@ -49,7 +49,7 @@ app.use(cors(corsOptions))
 //   }); 
 
 // app.use(require('./routes'))
-// app.use(require('./routes'))
+app.use(require('./routes'))
     if(process.env.NODE_ENV==='production'){
 
     app.use('/',(express.static(__dirname + '/public')))

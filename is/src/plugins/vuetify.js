@@ -29,6 +29,7 @@ import StepsIcon from "@/components/Icons/StepsIcon.vue";
 import LogoBlackIcon from "@/components/Icons/LogoBlackIcon.vue";
 import SaveIcon from "@/components/Icons/SaveIcon.vue";
 import UImageIcon from "@/components/Icons/UImageIcon.vue";
+import IndexIcon from "@/components/Icons/IndexIcon.vue";
 
 Vue.use(Vuetify);
 
@@ -150,6 +151,10 @@ export default new Vuetify({
       img_icon: {
         // name of our custom icon
         component: UImageIcon, // our custom component
+      },
+      index_icon: {
+        // name of our custom icon
+        component: IndexIcon, // our custom component
       },
     },
   },

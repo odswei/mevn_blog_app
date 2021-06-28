@@ -1,5 +1,5 @@
 <template>
-  <v-container class="container">
+  <div class="container">
     <!-- <div v-if="series">
       <h1>{{ series.s_title }}</h1>
       <p>followers: {{ series.followers.length }}</p>
@@ -25,9 +25,9 @@
       </div> -->
     <!-- {{ this.$store.state.series }} -->
 
-    <main-card :series="series" :cid="this.$route.params.chapter_id" />
+    <main-card :series="series" :cid="chapterId" />
     <!-- </div> -->
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       series: null,
+      chapterId: this.$route.query.chapter_id,
     };
   },
   computed: {
@@ -49,7 +50,7 @@ export default {
   },
   async created() {
     await axios
-      .get(`/series/${this.$route.params.id}/chapters`)
+      .get(`http://localhost:3000/series/${this.$route.params.id}/chapters`)
       .then(({ data }) => {
         this.series = data;
       });
@@ -58,7 +59,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+/* .container {
   background-color: white;
-}
+} */
 </style>

@@ -1,27 +1,39 @@
 <template>
-  <v-container class="main-card" v-if="series">
-    <h1>{{ series.s_title }}</h1>
+  <div class="main-card" v-if="series">
+    <toggle-index
+      v-show="isToggled"
+      @isToggled="toggleIndex"
+      :chapters="series.chapters"
+      @send_id="viewContent"
+    ></toggle-index>
+    <div class="series-title">{{ series.s_title }}</div>
+    <div class="yellow-card" @click="toggleIndex">
+      <v-icon size="35">$vuetify.icons.index_icon</v-icon>See All Chapters
+    </div>
     <div class="chapters-container">
       <div class="chapter-list">
         <div v-for="chapter in series.chapters" :key="chapter._id">
-          <div class="step-container">
-            <span class="dot">
-              <span>{{ chapter.chapter_no }}</span>
+          <div
+            class="chapter"
+            @click="viewContent(chapter._id)"
+            :class="[chapter._id == id ? 'isActive' : '']"
+          >
+            <span class="chapter-no">{{ chapter.chapter_no }}</span>
 
-              <span class="c-title">
-                <button @click="viewContent(chapter._id)">
-                  {{ chapter.c_title }}
-                </button>
-                <!-- <router-link
+            <span class="chapter-title">
+              <span>
+                {{ chapter.c_title }}
+              </span>
+              <!-- <router-link
                 v-if="loggedIn"
                 style="text-decoration: none"
                 :to="{ name: 'Editor', params: { id: chapter._id } }"
               >
                 <v-btn plain class="write-button"> Edit </v-btn></router-link
               > --></span
-              >
-            </span>
+            >
           </div>
+
           <!-- <div class="vl"></div> -->
         </div>
       </div>
@@ -30,26 +42,25 @@
         <editor-content :editor="editor" />
       </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import { Editor, EditorContent } from "@tiptap/vue-2";
 import StarterKit from "@tiptap/starter-kit";
+import toggleIndex from "./ToggleIndex.vue";
 
 export default {
-  components: { EditorContent },
+  components: { EditorContent, toggleIndex },
   props: ["series", "cid"],
   data: () => ({
     contents: null,
     title: null,
     editor: null,
+    isToggled: false,
+    id: null,
   }),
   computed: {
-    // contentView() {
-    //   if (this.contents) {
-    //     return this.contents[0].contents;
-    //   }
     //   return this.series.chapters[0].contents;
     // },
     // titleView() {
@@ -67,14 +78,20 @@ export default {
       const content = this.series.chapters.filter((c) => c._id === id);
       this.contents = content[0].contents;
       this.title = content[0].c_title;
+      this.id = content[0]._id;
+      if (this.isToggled) {
+        this.isToggled = false;
+      }
+    },
+    toggleIndex() {
+      this.isToggled = !this.isToggled;
     },
   },
   watch: {
     series() {
       const local = this.series.chapters.filter((c) => c._id === this.cid);
-
       this.editor.commands.setContent(local[0].contents);
-      this.title = this.series.chapters[0].c_title;
+      this.title = local[0].c_title;
     },
     contents() {
       this.editor.commands.setContent(this.contents);
@@ -84,9 +101,16 @@ export default {
   mounted() {
     this.editor = new Editor({
       editable: false,
-      content: null,
+      content: this.contents,
       extensions: [StarterKit],
     });
+    if (this.series) {
+      const local = this.series.chapters.filter((c) => c._id === this.cid);
+      this.editor.commands.setContent(local[0].contents);
+      this.title = local[0].c_title;
+    }
+    let p = this.cid.slice();
+    this.id = p;
   },
 
   beforeDestroy() {
@@ -96,12 +120,24 @@ export default {
 </script>
 
 <style scoped>
+.isActive {
+  background-color: #ffa000;
+  color: white;
+}
+.chapter {
+  margin-bottom: 10px;
+  margin-right: 30px;
+  border-radius: 5px;
+  padding: 5px 8px;
+}
+.chapter-no {
+  margin-right: 10px;
+}
 .main-card {
-  color: rgb(38, 37, 37);
+  color: rgb(41, 41, 41);
+  padding: 0px 15px;
 }
-.body {
-  padding-left: 25px;
-}
+
 h1 {
   margin-bottom: 20px;
 }
@@ -135,11 +171,40 @@ h1 {
   position: relative;
 }
 .chapters-container {
-  display: grid;
-  grid-template-columns: 0.6fr 1.6fr;
+  display: flex;
 }
 .chapter-list {
   /* background-color: aqua; */
   margin-top: 10px;
+  min-width: 280px;
+}
+
+.yellow-card {
+  font-size: 1.3em;
+  background-color: #ff6f00;
+  width: 70%;
+  color: white;
+  position: relative;
+  left: -25px;
+  color: #fff;
+  visibility: hidden;
+}
+
+.series-title {
+  font-size: 1.7em;
+  font-weight: 705;
+
+  color: rgb(46, 44, 44);
+}
+
+@media only screen and (max-width: 850px) {
+  .chapter-list {
+    display: none;
+  }
+  .yellow-card {
+    visibility: visible;
+    margin-bottom: 5px;
+    padding: 2px 25px;
+  }
 }
 </style>
