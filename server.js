@@ -5,11 +5,11 @@ const path =require('path')
 var history = require('connect-history-api-fallback');
 
 
-const corsOptions = {
-    origin: 'http://localhost:8080',
-    allowedHeaders: 'content-Type, Authorization',
-    maxAge:3166950
-}
+// const corsOptions = {
+//     origin: 'http://localhost:8080',
+//     allowedHeaders: 'content-Type, Authorization',
+//     maxAge:3166950
+// }
 
 require('dotenv').config()
 
@@ -32,7 +32,7 @@ app.use(passport.initialize())
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 
 
 
@@ -49,7 +49,7 @@ app.use(cors(corsOptions))
 //   }); 
 
 // app.use(require('./routes'))
-app.use(require('./routes'))
+// app.use(require('./routes'))
     if(process.env.NODE_ENV==='production'){
 
     app.use('/',(express.static(__dirname + '/public')))
