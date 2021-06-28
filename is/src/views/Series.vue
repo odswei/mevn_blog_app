@@ -50,7 +50,7 @@ export default {
   },
   async created() {
     await axios
-      .get(`http://localhost:3000/series/${this.$route.params.id}/chapters`)
+      .get(`/series/${this.$route.params.id}/chapters`)
       .then(({ data }) => {
         this.series = data;
       });
