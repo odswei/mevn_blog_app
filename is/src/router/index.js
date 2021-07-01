@@ -9,6 +9,7 @@ import Chapter from "../views/Chapter.vue";
 import Series from "../views/Series.vue";
 import Myseries from "../views/Myseries.vue";
 import Setting from "../views/Setting.vue";
+import ReadingList from "../views/ReadingList.vue";
 import axios from "axios";
 
 Vue.use(VueRouter);
@@ -74,6 +75,14 @@ const routes = [
     path: "/myseries",
     name: "Myseries",
     component: Myseries,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/readinglist",
+    name: "ReadingList",
+    component: ReadingList,
     meta: {
       requiresAuth: true,
     },

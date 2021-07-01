@@ -30,6 +30,8 @@ import LogoBlackIcon from "@/components/Icons/LogoBlackIcon.vue";
 import SaveIcon from "@/components/Icons/SaveIcon.vue";
 import UImageIcon from "@/components/Icons/UImageIcon.vue";
 import IndexIcon from "@/components/Icons/IndexIcon.vue";
+import ToSaveIcon from "@/components/Icons/ToSaveIcon.vue";
+import ReadingList from "@/components/Icons/ReadingList.vue";
 
 Vue.use(Vuetify);
 
@@ -155,6 +157,13 @@ export default new Vuetify({
       index_icon: {
         // name of our custom icon
         component: IndexIcon, // our custom component
+      },
+      tosave_icon: {
+        // name of our custom icon
+        component: ToSaveIcon, // our custom component
+      },
+      reading_btn: {
+        component: ReadingList,
       },
     },
   },

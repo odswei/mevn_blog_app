@@ -30,7 +30,11 @@
           </router-link>
         </div>
         <!-- use the modal component, pass in the prop -->
-
+        <div class="selected reading-list">
+          <router-link v-if="loggedIn" class="my-series" to="/readinglist">
+            <v-icon size="35"> $vuetify.icons.reading_btn</v-icon>
+          </router-link>
+        </div>
         <div class="selected">
           <router-link v-if="loggedIn" class="my-series" to="/myseries">
             My Series
@@ -142,6 +146,10 @@ export default {
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   margin-right: 10px;
+}
+
+.reading-list {
+  margin-right: 15px;
 }
 
 /* .nav-bar {

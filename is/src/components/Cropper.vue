@@ -16,29 +16,58 @@
           adjustStencil: false,
         }"
         :stencil-size="{
-          width: 180,
-          height: 180,
+          width: 200,
+          height: 200,
         }"
         image-restriction="stencil"
       />
-      <img class="img" :src="imgvuex" alt="image" v-show="!isShowed" />
+      <img
+        class="img"
+        :src="img"
+        alt="image"
+        v-show="filename ? false : true"
+      />
     </div>
-
     <div class="img-input-container">
       <div>
         <v-file-input
           v-model="filename"
           :rules="rules"
+          small-chips
+          class="img-input"
           accept="image/png, image/jpeg, image/bmp"
           placeholder="Pick an avatar"
           prepend-icon="mdi-camera"
           label="Your Picture"
-          class="img-input"
-          value="santania"
           @change="onSelected"
           @click="isShowed = true"
+          truncate-length="14"
         ></v-file-input>
-        <button class="button-img-save" @click="onSubmit">Save</button>
+      </div>
+      <div class="btn-img">
+        <button class="btn-img-save" @click="onSubmit">Change</button>
+      </div>
+    </div>
+
+    <div class="profile">
+      <div>
+        <div class="username">Change Username</div>
+
+        <input
+          type="text"
+          v-model="username"
+          @input="updateUsername(username)"
+          placeholder="username"
+        />
+      </div>
+      <div>
+        <div class="work-at">Change Work At</div>
+        <input
+          type="text"
+          v-model="work_at"
+          @input="updateWorkAt(work_at)"
+          placeholder="username"
+        />
       </div>
     </div>
   </div>
@@ -48,7 +77,20 @@
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import axios from "axios";
+import { mapGetters } from "vuex";
+import _ from "lodash";
 
+const chimney = localStorage.getItem("xhtrvbq");
+const apiClient = axios.create({
+  baseURL: process.env.VUE_APP_BASE_URL,
+  Accept: "application/json",
+  "Content-Type": "application/json",
+});
+
+apiClient.interceptors.request.use(function (config) {
+  config.headers.Authorization = "Bearer " + chimney;
+  return config;
+});
 export default {
   components: {
     Cropper,
@@ -58,8 +100,8 @@ export default {
       rules: [
         (value) =>
           !value ||
-          value.size < 1000000 ||
-          "Avatar size should be less than 0.1 MB!",
+          value.size < 300000 ||
+          "Avatar size should be less than 300KB!",
       ],
       image: null,
       preview: null,
@@ -68,6 +110,12 @@ export default {
       isShowed: false,
       filename: null,
       afterResize: null,
+      // user: {
+      // username: null,
+      work_at: null,
+
+      username: null,
+      timeout: null,
     };
   },
   // computed: {
@@ -82,19 +130,64 @@ export default {
   //   },
   // },
   computed: {
-    imgvuex() {
-      return this.$store.getters.getImage;
-    },
+    ...mapGetters({
+      img: "getImage",
+      uname: "getUname",
+      w_a: "getWorkAt",
+    }),
+
+    // uname() {
+    //   this.user.username = this.$store.getters.getUname;
+    //   return this.user.username;
+    // },
+
+    // work_at: {
+    //   get: function () {
+    //     return this.w_at;
+    //   },
+    //   set: function (val) {
+    //     this.user.work_at = val;
+    //   },
+    // },
   },
+  created() {
+    this.username = this.uname;
+    this.work_at = this.w_a;
+  },
+
   methods: {
+    // update() {
+    //   console.log(this.user);
+    //   if (this.user.username && this.user.work_at) {
+    //     axios.post("/update/u", this.user).then((res) => {
+    //       console.log(res);
+    //     });
+    //   }
+    // },
+    updateUsername: _.debounce(function (username) {
+      if (username) {
+        axios.post("/update/un", { username }).then(() => {
+          this.$store.dispatch("setUsername", username);
+        });
+      }
+    }, 2500),
+
+    updateWorkAt: _.debounce(function (work_at) {
+      if (work_at) {
+        axios.post("/update/uw", { work_at }).then(() => {
+          this.$store.dispatch("setWorkAt", work_at);
+        });
+      }
+    }, 2500),
+
     change({ coordinates, canvas }) {
       this.coordinates = coordinates;
       this.beforescale = canvas;
-      this.preview = canvas.toDataURL(this.file.type, 0.1);
+      this.preview = canvas.toDataURL(this.file.type, 0.08);
     },
     onSelected(e) {
       this.file = e;
-      if (this.file != undefined && this.file.size < 1000000) {
+      if (this.file != undefined && this.file.size < 300000) {
         let reader = new FileReader();
 
         const that = this;
@@ -108,11 +201,6 @@ export default {
       }
     },
     onSubmit() {
-      const apiClient = axios.create({
-        baseURL: process.env.VUE_APP_BASE_URL,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      });
       const width = 100;
       const height = 100;
       const reader = new FileReader();
@@ -265,12 +353,23 @@ const toBase64 = (file) =>
 </script>
 
 <style scoped>
+.username {
+  font-size: 0.8em;
+  color: #5c5c5c;
+}
+
+.work-at {
+  font-size: 0.8em;
+  color: #5c5c5c;
+}
+
 .img-container {
-  width: 240px;
-  height: 240px;
+  margin: auto;
+  width: 200px;
+  height: 200px;
   position: relative;
 
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 .img {
   margin: 0 auto;
@@ -281,8 +380,8 @@ const toBase64 = (file) =>
   transform: translate(-50%, -50%);
 }
 .profile-container {
-  text-align: center;
   margin: 0 auto;
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -290,13 +389,15 @@ const toBase64 = (file) =>
   transform: translate(-50%, -50%);
 }
 .cropper {
-  height: 220px;
-  width: 220px;
-  background: #ddd;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
   margin: 0 auto;
   position: absolute;
   top: 50%;
+  overflow: hidden;
+  perspective: 1px;
+  border-radius: 50%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -305,19 +406,48 @@ const toBase64 = (file) =>
 img {
   width: 200px;
   height: 200px;
-  border-radius: 50%;
+  border-radius: 50% !important;
 }
 
 .img-input {
-  width: 300px;
+  width: 180px;
+  /* text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; */
 }
-.button-img-save {
+.btn-img-save {
   background-color: #5c5c5c;
   color: white;
   padding: 2px 10px;
+  font-size: 0.8em;
   border-radius: 20px;
 }
 .img-input-container {
   display: flex;
+  max-width: 250px;
+  justify-content: center;
+}
+.btn-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile {
+  padding-top: 30px;
+}
+
+.profile div {
+  margin-bottom: 10px;
+}
+input {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid rgb(214, 214, 214);
+}
+
+input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(142, 186, 233);
 }
 </style>

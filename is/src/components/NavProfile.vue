@@ -20,9 +20,13 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>{{ info }}</v-list-item-title>
               <v-list-item-subtitle
                 ><span class="username"> {{ username }}</span>
+              </v-list-item-subtitle>
+              <v-list-item-subtitle
+                ><span class="username"
+                  ><small> @{{ work_at }}</small></span
+                >
               </v-list-item-subtitle>
             </v-list-item-content>
             <!-- 
@@ -67,10 +71,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      info: "",
       fav: true,
       menu: false,
       message: false,
@@ -88,12 +92,14 @@ export default {
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
-    image() {
-      return this.$store.getters.getImage;
-    },
-    username() {
-      return this.$store.getters.getUname;
-    },
+    // image() {
+    //   return this.$store.getters.getImage;
+    // },
+    ...mapGetters({
+      image: "getImage",
+      username: "getUname",
+      work_at: "getWorkAt",
+    }),
   },
 
   created() {

@@ -115,6 +115,10 @@ export default {
       this.componentLoaded = true;
       this.series = data;
     });
+
+    apiClient.get("/reading-ids").then(({ data }) => {
+      this.ids = data;
+    });
   },
 };
 

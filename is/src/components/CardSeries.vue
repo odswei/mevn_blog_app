@@ -4,62 +4,30 @@
       <div class="card-container">
         <div v-for="chapter in series" :key="chapter._id">
           <div class="card-container-gap">
-            <!-- <div v-for="sid in chapter.series_id" :key="sid._id"> -->
-            <!-- <v-card class="mx-auto" max-width="374" outlined>
-            <div class="card-align">
-              <v-card-text>
-                <v-avatar color="primary avatar-margin" size="107">
-                  <span class="white--text text-h5">DS</span></v-avatar
-                >
-
-                <div class="avatar-margin">
-                  {{ series.uid.username }}
-                </div>
-                <div class="text--primary box">
-                  <h2>
-                    <router-link
-                      class="series-title"
-                      :to="{ name: 'Series', params: { id: series._id } }"
-                      >{{ series.s_title }}
-                    </router-link>
-                  </h2>
-                </div>
-                <div class="text--primary"><small> May 22, 2021</small></div>
-                <div>
-                  <v-icon size="50">$vuetify.icons.steps_btn</v-icon>
-                </div>
-                <v-divider class="divide"></v-divider>
-                <span class="follower-claps">
-                  <v-icon size="30"> $vuetify.icons.follower_btn</v-icon
-                  ><span class="follower-claps-count">{{
-                    series.followers.length
-                  }}</span>
-                </span>
-                <span class="follower-claps">
-                  <v-icon size="30" class="follower-claps-count"
-                    >$vuetify.icons.claps_btn</v-icon
-                  >
-                  <span class="follower-claps-count">
-                    {{ series.claps.length }}</span
-                  >
-                </span>
-              </v-card-text>
-            </div>
-          </v-card> -->
             <div class="card">
-              <div v-if="chapter.series_id.uid.u_img">
-                <img class="u_img" v-bind:src="chapter.series_id.uid.u_img" />
+              <div class="u_img" v-if="chapter.series_id.uid.u_img">
+                <img v-bind:src="chapter.series_id.uid.u_img" />
               </div>
 
               <div v-else>
                 <v-icon size="34" class="u_img">$vuetify.icons.img_icon</v-icon>
               </div>
               <div>
-                <span class="save_icon">
-                  <v-icon size="42" class="follower-claps-count"
-                    >$vuetify.icons.save_btn</v-icon
-                  >
-                </span>
+                <div v-if="checkId(chapter._id)">
+                  <span class="save_icon">
+                    <v-icon size="42" class="follower-claps-count"
+                      >$vuetify.icons.save_btn</v-icon
+                    >
+                  </span>
+                </div>
+                <div v-else>
+                  <span class="save_icon" @click="loginCheck(chapter._id)">
+                    <v-icon size="42" class="follower-claps-count"
+                      >$vuetify.icons.tosave_icon</v-icon
+                    >
+                  </span>
+                </div>
+
                 <div class="row-gap">
                   <h3 v-if="typeof series !== null">
                     <router-link
@@ -103,7 +71,7 @@
                         },
                       }"
                       ><strong> by {{ chapter.series_id.uid.username }}</strong>
-                      @Infinite
+                      @{{ work_at }}
                     </router-link>
                   </div>
                   <span
@@ -166,8 +134,45 @@
 </template>
 
 <script>
+import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   props: ["series"],
+  computed: {
+    ...mapGetters({
+      loggedIn: "loggedIn",
+      work_at: "getWorkAt",
+    }),
+  },
+  computed: {
+    checkId(id) {
+      if (this.ids.includes(id)) return true;
+    },
+  },
+  methods: {
+    loginCheck(e) {
+      if (this.loggedIn) {
+        axios.post("/reading-list", { reading_list: e }).then(() => {
+          this.ids.push(e);
+        });
+      } else {
+        return this.$router.push("/login");
+      }
+    },
+  },
+  created() {
+    const chimney = localStorage.getItem("xhtrvbq");
+    if (chimney) {
+      const apiClient = axios.create({
+        baseURL: process.env.VUE_APP_BASE_URL,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      });
+      apiClient.get("/reading-ids").then(({ data }) => {
+        this.ids = data;
+      });
+    }
+  },
 };
 </script>
 
@@ -186,6 +191,7 @@ img {
 
 .save_icon {
   float: right;
+  padding-right: 10px;
 }
 .card-container {
   display: grid;
@@ -201,11 +207,8 @@ img {
 
 .card {
   border-radius: 6px;
-
   grid-auto-rows: minmax(250px, auto);
-
   display: grid;
-
   grid-template-columns: 0.5fr 2fr;
 }
 

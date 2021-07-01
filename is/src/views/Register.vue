@@ -69,6 +69,7 @@ export default {
       this.$store
         .dispatch("register", {
           username: this.user.username,
+          email: this.user.email,
           password: this.user.password,
         })
         .then(() => {

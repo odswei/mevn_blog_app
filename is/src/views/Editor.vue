@@ -17,6 +17,14 @@
 
     <editor v-model="content" placeholder="hello" />
 
+    <input
+      type="text"
+      placeholder="tags"
+      v-model="arrayTags"
+      @keyup.enter="splittag"
+      @blur="splittag"
+    />
+
     <v-btn
       v-if="chapter_id"
       class="btn"
@@ -62,6 +70,8 @@ export default {
       s_title: null,
       content: null,
       c_title: null,
+      arrayTags: null,
+      tags: [],
     };
   },
   computed: {
@@ -69,8 +79,24 @@ export default {
       // console.log(typeof this.content);
       return this.content;
     },
+    // tags(){
+    //   get:function(){
+    //     this.tags.split
+    //   }
+    // }
   },
   methods: {
+    splittag: function () {
+      this.tags = this.arrayTags.split(" ");
+      let array = [];
+      this.tags.forEach((element) => {
+        // console.log(element);
+        if (element !== "") {
+          array.push({ tag: element });
+        }
+      });
+      this.tags = array;
+    },
     // chapterSave() {
     //   const hello = String(this.content);
 
@@ -99,7 +125,7 @@ export default {
       let chapter_content = {
         contents: this.content,
         c_title: this.c_title,
-        tags: [{ tag: "mongodb" }, { tag: "mongoose" }],
+        tags: this.tags,
         published: true,
         sid: this.sid,
       };
@@ -116,6 +142,7 @@ export default {
         contents: this.content,
         c_title: this.c_title,
         published: true,
+        tags: this.tags,
         sid: this.sid,
       };
 

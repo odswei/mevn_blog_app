@@ -57,7 +57,13 @@ export default new Vuex.Store({
       state.signal = data;
     },
     SET_UPDATED_IMAGE(state, data) {
-      state.image.data = data;
+      state.image.img = data;
+    },
+    SET_USERNAME(state, data) {
+      state.image.u = data;
+    },
+    SET_WORK_AT(state, data) {
+      state.image.w_a = data;
     },
   },
   actions: {
@@ -106,6 +112,12 @@ export default new Vuex.Store({
     setImgChange({ commit }, data) {
       commit("SET_UPDATED_IMAGE", data);
     },
+    setUsername({ commit }, data) {
+      commit("SET_USERNAME", data);
+    },
+    setWorkAt({ commit }, data) {
+      commit("SET_WORK_AT", data);
+    },
   },
   modules: {},
   getters: {
@@ -114,7 +126,7 @@ export default new Vuex.Store({
     },
     getImage(state) {
       if (state.image) {
-        return state.image.data;
+        return state.image.img;
       }
       return state.image;
     },
@@ -130,6 +142,11 @@ export default new Vuex.Store({
     getUname(state) {
       if (state.image) {
         return state.image.u;
+      }
+    },
+    getWorkAt(state) {
+      if (state.image) {
+        return state.image.w_a;
       }
     },
   },

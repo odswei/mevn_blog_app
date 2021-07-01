@@ -26,6 +26,7 @@
     <!-- {{ this.$store.state.series }} -->
 
     <main-card :series="series" :cid="chapterId" />
+
     <!-- </div> -->
   </div>
 </template>
@@ -50,7 +51,7 @@ export default {
   },
   async created() {
     await axios
-      .get(`/series/${this.$route.params.id}/chapters`)
+      .get(`http://localhost:3000/series/${this.$route.params.id}/chapters`)
       .then(({ data }) => {
         this.series = data;
       });

@@ -25,7 +25,7 @@ router.post('/series',passport.authenticate('jwt',{session:false}),function(req,
             user.series_id.push(series)
             user.save(function(err){
                 if(err)return res.send(err)
-                res.json({status:'adding new series successed'})
+                res.json({status:'ad ding new series successed'})
             })
         })
     })
@@ -77,6 +77,7 @@ router.get('/myseries',passport.authenticate('jwt',{session:false}), function(re
 //return all series for home vue
 router.get('/series', function(req,res,next){
     Chapter.find({})
+    .select(['claps','c_title','tags','published','update','chapter_no'])
     .populate({
         path:'series_id',
         select:['s_title','followers','claps'],
